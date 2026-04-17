@@ -39,5 +39,7 @@ export const sampleTranscription = {
       ],
     },
   ],
-  bass_stem_path: "/tmp/therealbass/stems",
+  bass_stem_path: "/tmp/therealbass/stems/htdemucs/sample/bass.wav",
+  file_id: "00000000000000000000000000000000",
+  bass_audio_url: null,
 };

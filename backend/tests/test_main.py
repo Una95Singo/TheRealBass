@@ -130,6 +130,10 @@ def test_valid_upload_returns_canned_json(client, filename, mime, extension):
     assert body["time_signature"] == CANNED_RESULT["time_signature"]
     assert body["measures"] == CANNED_RESULT["measures"]
     assert "bass_stem_path" in body
+    assert body["bass_stem_path"].endswith("bass.wav")
+    assert len(body["file_id"]) == 32
+    int(body["file_id"], 16)
+    assert body["bass_audio_url"] == f"/stems/{body['file_id']}/bass.wav"
 
     # Stored file should have the right extension and a UUID-hex stem.
     stored = list(client.upload_dir.iterdir())
@@ -243,6 +247,50 @@ def test_cors_preflight_allows_127_0_0_1_5173(client):
     )
     assert resp.status_code == 200
     assert resp.headers.get("access-control-allow-origin") == "http://127.0.0.1:5173"
+
+
+# ---------------------------------------------------------------------------
+# /stems/{file_id}/bass.wav
+# ---------------------------------------------------------------------------
+def _write_fake_bass(stems_dir: Path, file_id: str, content: bytes = b"RIFFFAKE") -> Path:
+    target_dir = stems_dir / "htdemucs" / file_id
+    target_dir.mkdir(parents=True, exist_ok=True)
+    bass = target_dir / "bass.wav"
+    bass.write_bytes(content)
+    return bass
+
+
+def test_get_bass_stem_returns_file(client):
+    file_id = "a" * 32
+    _write_fake_bass(client.stems_dir, file_id, b"RIFFFAKEWAVE")
+    resp = client.get(f"/stems/{file_id}/bass.wav")
+    assert resp.status_code == 200
+    assert resp.headers["content-type"] == "audio/wav"
+    assert resp.content == b"RIFFFAKEWAVE"
+
+
+def test_get_bass_stem_missing_returns_404(client):
+    file_id = "b" * 32
+    resp = client.get(f"/stems/{file_id}/bass.wav")
+    assert resp.status_code == 404
+
+
+@pytest.mark.parametrize(
+    "bad_id",
+    [
+        "../../etc/passwd",
+        "not-a-hex-id",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",  # uppercase — regex requires lowercase
+        "a" * 31,  # too short
+        "a" * 33,  # too long
+    ],
+)
+def test_get_bass_stem_rejects_bad_file_id(client, bad_id):
+    resp = client.get(f"/stems/{bad_id}/bass.wav")
+    # FastAPI may 404 on path-mismatch (e.g. slashes); 400 on regex reject.
+    assert resp.status_code in (400, 404)
+    if resp.status_code == 400:
+        assert "Invalid file id" in resp.json()["detail"]
 
 
 def test_cors_disallowed_origin_has_no_allow_origin_header(client):

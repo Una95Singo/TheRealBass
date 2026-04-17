@@ -1,12 +1,13 @@
 """FastAPI entry point for TheRealBass."""
 from __future__ import annotations
 
-import shutil
+import re
 import uuid
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from analyze import analyze_midi
 from isolate import isolate_bass
@@ -99,8 +100,24 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Processing failed: {exc}")
 
-    result["bass_stem_path"] = str(STEMS_DIR)
+    result["bass_stem_path"] = str(bass_stem)
+    result["file_id"] = file_id
+    result["bass_audio_url"] = f"/stems/{file_id}/bass.wav"
     return result
+
+
+_UUID_HEX_RE = re.compile(r"^[0-9a-f]{32}$")
+
+
+@app.get("/stems/{file_id}/bass.wav")
+def get_bass_stem(file_id: str) -> FileResponse:
+    if not _UUID_HEX_RE.match(file_id):
+        raise HTTPException(status_code=400, detail="Invalid file id.")
+
+    bass_path = _safe_child(STEMS_DIR, STEMS_DIR / "htdemucs" / file_id / "bass.wav")
+    if not bass_path.is_file():
+        raise HTTPException(status_code=404, detail="Bass stem not found.")
+    return FileResponse(str(bass_path), media_type="audio/wav")
 
 
 if __name__ == "__main__":

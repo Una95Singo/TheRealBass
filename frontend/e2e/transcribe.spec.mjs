@@ -40,7 +40,9 @@ const sampleTranscription = {
       notes: [{ pitch: "G2", duration: "w", start_beat: 1 }],
     },
   ],
-  bass_stem_path: "/tmp/therealbass/stems",
+  bass_stem_path: "/tmp/therealbass/stems/htdemucs/abc/bass.wav",
+  file_id: "abc00000000000000000000000000000",
+  bass_audio_url: "/stems/abc00000000000000000000000000000/bass.wav",
 };
 
 const fakeMp3Buffer = Buffer.from([0xff, 0xfb, 0x90, 0x44, 0x00, 0x00, 0x00, 0x00]);
@@ -56,6 +58,10 @@ async function uploadFakeMp3(page) {
 
 test.describe("TheRealBass /transcribe flow", () => {
   test("happy path: renders key/bpm/time and VexFlow notation", async ({ page }) => {
+    // Stub the audio endpoint so the <audio> element doesn't emit a real request.
+    await page.route("**/stems/**/bass.wav", async (route) => {
+      await route.fulfill({ status: 200, contentType: "audio/wav", body: "" });
+    });
     await page.route(TRANSCRIBE_URL, async (route) => {
       await route.fulfill({
         status: 200,
@@ -81,6 +87,15 @@ test.describe("TheRealBass /transcribe flow", () => {
 
     const pathCount = await page.locator(".notation svg path").count();
     expect(pathCount).toBeGreaterThan(0);
+
+    // Isolated bass stem audio element is present and points at the backend.
+    const audio = page.locator(".bass-audio audio");
+    await expect(audio).toHaveCount(1);
+    const src = await audio.getAttribute("src");
+    expect(src).toContain("/stems/abc00000000000000000000000000000/bass.wav");
+
+    // PDF download button is present.
+    await expect(page.getByRole("button", { name: /Download PDF/i })).toBeVisible();
   });
 
   test("backend 400: shows Unsupported file type error", async ({ page }) => {
