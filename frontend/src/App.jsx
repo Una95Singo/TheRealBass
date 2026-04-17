@@ -3,6 +3,7 @@ import UploadZone from "./components/UploadZone.jsx";
 import ProcessingView from "./components/ProcessingView.jsx";
 import TranscriptionView from "./components/TranscriptionView.jsx";
 import { transcribeFile } from "./api.js";
+import { sampleTranscription } from "./sampleData.js";
 
 export default function App() {
   const [status, setStatus] = useState("idle");
@@ -36,6 +37,15 @@ export default function App() {
       {status === "idle" && (
         <>
           <UploadZone onFile={handleFile} />
+          <button
+            style={{ marginTop: 12 }}
+            onClick={() => {
+              setResult(sampleTranscription);
+              setStatus("done");
+            }}
+          >
+            Load sample notation (dev)
+          </button>
           {error && <p className="error">{error}</p>}
         </>
       )}

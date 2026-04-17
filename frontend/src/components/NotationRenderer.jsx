@@ -5,14 +5,15 @@ const MEASURE_WIDTH = 260;
 const STAVE_HEIGHT = 140;
 
 function toVexKey(pitch) {
-  const name = pitch.slice(0, -1);
   const octave = pitch.slice(-1);
+  const name = pitch.slice(0, -1);
   return `${name.toLowerCase()}/${octave}`;
 }
 
 function accidentalFor(pitch) {
-  if (pitch.includes("#")) return "#";
-  if (pitch.toLowerCase().includes("b") && pitch.length > 2) return "b";
+  const mid = pitch.slice(1, -1);
+  if (mid === "#" || mid === "##") return mid;
+  if (mid === "b" || mid === "bb") return mid;
   return null;
 }
 
@@ -24,6 +25,9 @@ export default function NotationRenderer({ data }) {
     containerRef.current.innerHTML = "";
 
     const measures = data.measures || [];
+    const [numBeats, beatValue] = (data.time_signature || "4/4")
+      .split("/")
+      .map(Number);
     const perRow = 4;
     const rows = Math.max(1, Math.ceil(measures.length / perRow));
     const width = Math.min(measures.length, perRow) * MEASURE_WIDTH + 40;
@@ -61,7 +65,10 @@ export default function NotationRenderer({ data }) {
 
       if (!notes.length) return;
 
-      const voice = new Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
+      const voice = new Voice({
+        num_beats: numBeats,
+        beat_value: beatValue,
+      }).setStrict(false);
       voice.addTickables(notes);
       new Formatter().joinVoices([voice]).format([voice], MEASURE_WIDTH - 40);
       voice.draw(ctx, stave);
