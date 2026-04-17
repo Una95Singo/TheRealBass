@@ -53,8 +53,12 @@ pip install -r requirements.txt
 All dependency versions in `requirements.txt` are pinned exactly.
 
 > **Note:** On the first transcription, Demucs downloads the `htdemucs` model
-> weights (~1GB) into your Torch cache (`~/.cache/torch/hub/`). Subsequent runs
-> use the cached weights. Basic Pitch bundles its own (much smaller) model.
+> weights (~1GB) from `dl.fbaipublicfiles.com` into your Torch cache
+> (`~/.cache/torch/hub/`). Subsequent runs use the cached weights. Basic Pitch
+> bundles its own (much smaller) model inside the wheel — no download needed.
+> If you are behind a firewall that blocks that host, the Demucs step will
+> fail with HTTP 403; whitelist `dl.fbaipublicfiles.com` or pre-seed the
+> Torch cache.
 
 Start the API:
 
@@ -109,6 +113,35 @@ Response shape:
 
 Duration codes follow VexFlow: `w`, `h`, `q`, `8`, `16`, `32`, with `d` suffix
 for dotted values (e.g. `qd`).
+
+## Testing
+
+Backend (no ML stack required — uses a separate `.venv-test`):
+
+```bash
+cd backend
+python3 -m venv .venv-test
+source .venv-test/bin/activate
+pip install -r dev-requirements.txt
+PYTHONPATH=. pytest tests/ -v
+```
+
+A second smoke test validates the real music21 analyze path against a hand-crafted
+MIDI fixture (requires the full `.venv`):
+
+```bash
+cd backend
+source .venv/bin/activate
+python scripts/smoke_analyze.py
+```
+
+Frontend end-to-end tests (stub the backend via Playwright route interception):
+
+```bash
+cd frontend
+npm install
+npx playwright test
+```
 
 ## Security & dependencies
 
