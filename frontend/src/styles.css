@@ -82,16 +82,50 @@ body {
   border-radius: 8px;
 }
 .midi-player.error { color: #b00020; }
-.midi-player label {
+.midi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.midi-header > label {
   display: block;
   font-size: 12px;
   color: #666;
-  margin-bottom: 6px;
+}
+.midi-mode {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+}
+.midi-mode label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
 }
 .midi-controls {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.confidence-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #666;
+  margin: 8px 0 0;
+}
+.confidence-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: #c26a1b;
+  border-radius: 3px;
 }
 .midi-controls button {
   padding: 4px 12px;

@@ -95,13 +95,13 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
     midi_subdir.mkdir(parents=True, exist_ok=True)
     try:
         bass_stem = isolate_bass(upload_path, STEMS_DIR)
-        midi_path = transcribe_to_midi(bass_stem, midi_subdir)
+        midi_path, note_events = transcribe_to_midi(bass_stem, midi_subdir)
         # Normalize Basic Pitch's bass_basic_pitch.mid → bass.mid for a clean URL.
         canonical_midi = midi_subdir / "bass.mid"
         if midi_path != canonical_midi:
             midi_path.replace(canonical_midi)
             midi_path = canonical_midi
-        result = analyze_midi(midi_path)
+        result = analyze_midi(midi_path, note_events=note_events)
     except HTTPException:
         raise
     except Exception as exc:

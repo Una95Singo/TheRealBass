@@ -92,13 +92,13 @@ def _patched_pipeline():
         out_path = Path(out) / "bass_basic_pitch.mid"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_bytes(b"MThd")
-        return out_path
+        return out_path, []
 
     return patch.multiple(
         "main",
         isolate_bass=lambda audio, out: Path(out) / "bass.wav",
         transcribe_to_midi=fake_transcribe,
-        analyze_midi=lambda midi: dict(CANNED_RESULT),
+        analyze_midi=lambda midi, note_events=None: dict(CANNED_RESULT),
     )
 
 

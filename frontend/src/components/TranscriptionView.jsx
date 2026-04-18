@@ -33,6 +33,12 @@ export default function TranscriptionView({ data, onReset }) {
     doc.save("therealbass-lead-sheet.pdf");
   }
 
+  function hasLowConfidenceNotes(d) {
+    return (d.measures || []).some((m) =>
+      (m.notes || []).some((n) => typeof n.confidence === "number" && n.confidence < 0.5),
+    );
+  }
+
   return (
     <div>
       <div className="meta">
@@ -45,14 +51,14 @@ export default function TranscriptionView({ data, onReset }) {
         <NotationRenderer data={data} />
       </div>
 
-      {audioUrl && (
-        <div className="bass-audio">
-          <label>Isolated bass stem</label>
-          <audio src={audioUrl} controls preload="metadata" />
-        </div>
+      {hasLowConfidenceNotes(data) && (
+        <p className="confidence-legend">
+          <span className="confidence-swatch" /> Notes in orange had low model
+          confidence — double-check by ear.
+        </p>
       )}
 
-      {midiPreviewUrl && <MidiPlayer url={midiPreviewUrl} />}
+      {midiPreviewUrl && <MidiPlayer midiUrl={midiPreviewUrl} bassUrl={audioUrl} />}
 
       <div className="actions">
         <button onClick={handleDownloadPdf} className="primary">

@@ -2,21 +2,29 @@ import { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 import { Midi } from "@tonejs/midi";
 
-// Plays back the transcribed MIDI in the browser using a Tone.js synth.
-// Exposes Play/Pause/Stop and a read-only progress bar.
-export default function MidiPlayer({ url }) {
+// A/B playback of the isolated bass stem against the synthesized MIDI.
+// "Original" plays the bass audio, "MIDI" plays the Tone.js synth, "Both"
+// plays them together so the user can hear where the transcription differs.
+export default function MidiPlayer({ midiUrl, bassUrl }) {
+  const audioRef = useRef(null);
   const synthRef = useRef(null);
   const partRef = useRef(null);
+
+  const [mode, setMode] = useState(bassUrl ? "both" : "midi");
   const [state, setState] = useState("idle"); // idle | ready | playing | paused
-  const [duration, setDuration] = useState(0);
+  const [midiLoaded, setMidiLoaded] = useState(false);
+  const [midiDuration, setMidiDuration] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
 
+  // Load MIDI + set up Tone.js synth.
   useEffect(() => {
+    if (!midiUrl) return undefined;
     let cancelled = false;
     (async () => {
       try {
-        const midi = await Midi.fromUrl(url);
+        const midi = await Midi.fromUrl(midiUrl);
         if (cancelled) return;
 
         const synth = new Tone.PolySynth(Tone.Synth, {
@@ -40,8 +48,8 @@ export default function MidiPlayer({ url }) {
         part.start(0);
         partRef.current = part;
 
-        setDuration(midi.duration);
-        setState("ready");
+        setMidiDuration(midi.duration);
+        setMidiLoaded(true);
       } catch (e) {
         if (!cancelled) setError(e.message || "Failed to load MIDI");
       }
@@ -56,78 +64,140 @@ export default function MidiPlayer({ url }) {
       partRef.current = null;
       synthRef.current = null;
     };
-  }, [url]);
+  }, [midiUrl]);
 
+  const isReady = midiLoaded && (bassUrl ? audioDuration > 0 : true);
+  useEffect(() => {
+    if (isReady && state === "idle") setState("ready");
+  }, [isReady, state]);
+
+  // Apply mode changes to mute/unmute sources.
+  useEffect(() => {
+    if (synthRef.current) {
+      synthRef.current.mute = mode === "original";
+    }
+    if (audioRef.current) {
+      audioRef.current.muted = mode === "midi";
+    }
+  }, [mode]);
+
+  // Tick progress while playing.
   useEffect(() => {
     if (state !== "playing") return undefined;
+    const duration = Math.max(midiDuration, audioDuration);
     const id = setInterval(() => {
-      setProgress(Tone.Transport.seconds);
-      if (duration > 0 && Tone.Transport.seconds >= duration) {
-        Tone.Transport.stop();
-        setState("ready");
-        setProgress(0);
+      const t =
+        audioRef.current && !audioRef.current.paused
+          ? audioRef.current.currentTime
+          : Tone.Transport.seconds;
+      setProgress(t);
+      if (duration > 0 && t >= duration) {
+        handleStop();
       }
     }, 100);
     return () => clearInterval(id);
-  }, [state, duration]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, midiDuration, audioDuration]);
 
   async function handlePlay() {
-    if (state === "playing") return;
+    if (!isReady || state === "playing") return;
     await Tone.start();
-    if (state === "paused") {
-      Tone.Transport.start();
-    } else {
+
+    // Reset positions unless resuming from pause.
+    if (state !== "paused") {
       Tone.Transport.stop();
       Tone.Transport.position = 0;
-      Tone.Transport.start();
+      if (audioRef.current) audioRef.current.currentTime = 0;
     }
+
+    // Apply mute state for the selected mode.
+    if (synthRef.current) synthRef.current.mute = mode === "original";
+    if (audioRef.current) audioRef.current.muted = mode === "midi";
+
+    // Start both together. Missing sources are muted so they're cheap no-ops.
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {/* ignore autoplay denial */});
+    }
+    Tone.Transport.start();
     setState("playing");
   }
 
   function handlePause() {
     if (state !== "playing") return;
     Tone.Transport.pause();
+    audioRef.current?.pause();
     setState("paused");
   }
 
   function handleStop() {
     Tone.Transport.stop();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     setProgress(0);
-    setState("ready");
+    setState(isReady ? "ready" : "idle");
   }
+
+  const duration = Math.max(midiDuration, audioDuration);
+  const pct = duration > 0 ? Math.min(100, (progress / duration) * 100) : 0;
+  const playDisabled = !isReady || state === "playing";
+  const pauseDisabled = state !== "playing";
+  const stopDisabled = state === "idle" || state === "ready";
 
   if (error) {
-    return <div className="midi-player error">MIDI preview unavailable: {error}</div>;
+    return <div className="midi-player error">Playback unavailable: {error}</div>;
   }
-
-  const pct = duration > 0 ? Math.min(100, (progress / duration) * 100) : 0;
 
   return (
     <div className="midi-player">
-      <label>Transcribed MIDI preview</label>
+      <div className="midi-header">
+        <label>Playback</label>
+        <div className="midi-mode" role="radiogroup" aria-label="Playback source">
+          {bassUrl && (
+            <label>
+              <input
+                type="radio"
+                name="playback-mode"
+                value="original"
+                checked={mode === "original"}
+                onChange={() => setMode("original")}
+              />
+              Original
+            </label>
+          )}
+          <label>
+            <input
+              type="radio"
+              name="playback-mode"
+              value="midi"
+              checked={mode === "midi"}
+              onChange={() => setMode("midi")}
+            />
+            Transcribed MIDI
+          </label>
+          {bassUrl && (
+            <label>
+              <input
+                type="radio"
+                name="playback-mode"
+                value="both"
+                checked={mode === "both"}
+                onChange={() => setMode("both")}
+              />
+              Both (A/B)
+            </label>
+          )}
+        </div>
+      </div>
       <div className="midi-controls">
-        <button
-          type="button"
-          onClick={handlePlay}
-          disabled={state === "idle" || state === "playing"}
-          aria-label="Play MIDI"
-        >
+        <button type="button" onClick={handlePlay} disabled={playDisabled} aria-label="Play">
           Play
         </button>
-        <button
-          type="button"
-          onClick={handlePause}
-          disabled={state !== "playing"}
-          aria-label="Pause MIDI"
-        >
+        <button type="button" onClick={handlePause} disabled={pauseDisabled} aria-label="Pause">
           Pause
         </button>
-        <button
-          type="button"
-          onClick={handleStop}
-          disabled={state === "idle" || state === "ready"}
-          aria-label="Stop MIDI"
-        >
+        <button type="button" onClick={handleStop} disabled={stopDisabled} aria-label="Stop">
           Stop
         </button>
         <div className="midi-progress" aria-hidden="true">
@@ -137,6 +207,16 @@ export default function MidiPlayer({ url }) {
           {formatTime(progress)} / {formatTime(duration)}
         </span>
       </div>
+      {bassUrl && (
+        <audio
+          ref={audioRef}
+          src={bassUrl}
+          preload="metadata"
+          onLoadedMetadata={(e) =>
+            setAudioDuration(Number.isFinite(e.currentTarget.duration) ? e.currentTarget.duration : 0)
+          }
+        />
+      )}
     </div>
   );
 }

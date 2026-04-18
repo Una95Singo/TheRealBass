@@ -140,6 +140,9 @@ export default function NotationRenderer({ data }) {
         });
         const acc = accidentalFor(n.pitch);
         if (acc) note.addModifier(new Accidental(acc), 0);
+        if (typeof n.confidence === "number" && n.confidence < 0.5) {
+          note.setStyle({ fillStyle: "#c26a1b", strokeStyle: "#c26a1b" });
+        }
         return note;
       });
 
@@ -148,10 +151,14 @@ export default function NotationRenderer({ data }) {
         const { str, fret } = midi != null
           ? pitchToStringFret(midi)
           : { str: 1, fret: 0 };
-        return new TabNote({
+        const tn = new TabNote({
           positions: [{ str, fret }],
           duration: n.duration,
         });
+        if (typeof n.confidence === "number" && n.confidence < 0.5) {
+          tn.setStyle({ fillStyle: "#c26a1b", strokeStyle: "#c26a1b" });
+        }
+        return tn;
       });
 
       const staveVoice = new Voice({

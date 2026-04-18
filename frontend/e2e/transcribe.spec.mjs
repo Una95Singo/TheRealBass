@@ -41,7 +41,7 @@ const sampleTranscription = {
     {
       measure_number: 4,
       chord: "D7",
-      notes: [{ pitch: "D2", duration: "w", start_beat: 1 }],
+      notes: [{ pitch: "D2", duration: "w", start_beat: 1, confidence: 0.3 }],
     },
   ],
   bass_stem_path: "/tmp/therealbass/stems/htdemucs/abc/bass.wav",
@@ -108,8 +108,8 @@ test.describe("TheRealBass /transcribe flow", () => {
       expect(svgText).toContain(`>${chord}</text>`);
     }
 
-    // Isolated bass stem audio element is present and points at the backend.
-    const audio = page.locator(".bass-audio audio");
+    // Isolated bass stem audio element lives inside the playback player.
+    const audio = page.locator(".midi-player audio");
     await expect(audio).toHaveCount(1);
     const src = await audio.getAttribute("src");
     expect(src).toContain("/stems/abc00000000000000000000000000000/bass.wav");
@@ -117,13 +117,23 @@ test.describe("TheRealBass /transcribe flow", () => {
     // PDF download button is present.
     await expect(page.getByRole("button", { name: /Download PDF/i })).toBeVisible();
 
-    // MIDI preview player is mounted with a Play button.
+    // Playback player is mounted with a Play button.
     await expect(page.locator(".midi-player")).toBeVisible();
-    await expect(page.getByRole("button", { name: /Play MIDI/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Play$/ })).toBeVisible();
+
+    // A/B source toggle shows all three modes when both bass + midi urls are set.
+    await expect(page.getByRole("radio", { name: /Original/ })).toBeVisible();
+    await expect(page.getByRole("radio", { name: /Transcribed MIDI/ })).toBeVisible();
+    await expect(page.getByRole("radio", { name: /Both/ })).toBeVisible();
 
     // Tab notes are rendered under every measure.
     const tabNoteCount = await page.locator(".notation svg .vf-tabnote").count();
     expect(tabNoteCount).toBeGreaterThan(0);
+
+    // Low-confidence notes are coloured orange and the legend appears.
+    await expect(page.locator(".confidence-legend")).toBeVisible();
+    const orangeFills = await page.locator('.notation svg [fill="#c26a1b"]').count();
+    expect(orangeFills).toBeGreaterThan(0);
   });
 
   test("backend 400: shows Unsupported file type error", async ({ page }) => {

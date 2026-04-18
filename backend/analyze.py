@@ -2,11 +2,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 from music21 import converter, meter, tempo
 
 from chords import infer_chord
+from confidence import attach_confidence
 
 
 _DURATION_MAP = {
@@ -30,8 +31,15 @@ def _duration_code(quarter_length: float) -> str:
     return _DURATION_MAP[best]
 
 
-def analyze_midi(midi_path: Path) -> dict[str, Any]:
-    """Parse the MIDI file and return structured notation data."""
+def analyze_midi(
+    midi_path: Path,
+    note_events: Iterable[tuple[float, float, int, float, Any]] | None = None,
+) -> dict[str, Any]:
+    """Parse the MIDI file and return structured notation data.
+
+    When note_events (from basic_pitch.inference.predict) is supplied, each
+    rendered note is annotated with a "confidence" in [0, 1].
+    """
     score = converter.parse(str(midi_path))
     quantized = score.quantize(quarterLengthDivisors=(4, 3), inPlace=False)
 
@@ -88,6 +96,8 @@ def analyze_midi(midi_path: Path) -> dict[str, Any]:
             {"measure_number": i, "notes": grouped.get(i, [])}
             for i in sorted(grouped)
         ]
+
+    attach_confidence(measures, note_events, bpm, beats_per_measure)
 
     return {
         "key": key_name,
