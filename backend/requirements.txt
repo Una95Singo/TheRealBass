@@ -9,3 +9,4 @@ numpy==1.26.4
 torch==2.2.2
 torchaudio==2.2.2
 soundfile==0.12.1
+setuptools==75.1.0
