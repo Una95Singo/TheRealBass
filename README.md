@@ -39,12 +39,16 @@ TheRealBass/
 
 ### 1. Backend (Python venv)
 
-The backend must be run inside a Python virtual environment. Python 3.10+ is
-recommended.
+The backend must be run inside a Python virtual environment. **Use Python
+3.10 or 3.11** — the pinned `torch==2.2.2` does not publish wheels for
+Python 3.12+ and `basic-pitch` pulls in TensorFlow with similarly tight
+bounds. If `pip install` says *"Could not find a version that satisfies
+the requirement torch==2.2.2"*, your Python is too new; install 3.11 and
+create the venv with it explicitly (`python3.11 -m venv .venv`).
 
 ```bash
 cd backend
-python3 -m venv .venv
+python3.11 -m venv .venv             # Windows: py -3.11 -m venv .venv
 source .venv/bin/activate            # Windows: .venv\Scripts\activate
 pip install --upgrade pip
 pip install -r requirements.txt
