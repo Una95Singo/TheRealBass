@@ -120,6 +120,10 @@ test.describe("TheRealBass /transcribe flow", () => {
     // MIDI preview player is mounted with a Play button.
     await expect(page.locator(".midi-player")).toBeVisible();
     await expect(page.getByRole("button", { name: /Play MIDI/i })).toBeVisible();
+
+    // Tab notes are rendered under every measure.
+    const tabNoteCount = await page.locator(".notation svg .vf-tabnote").count();
+    expect(tabNoteCount).toBeGreaterThan(0);
   });
 
   test("backend 400: shows Unsupported file type error", async ({ page }) => {
