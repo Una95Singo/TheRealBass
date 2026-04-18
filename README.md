@@ -89,7 +89,7 @@ Open the Vite URL in your browser. The frontend only calls `http://127.0.0.1:800
 
 Multipart form upload with a single `file` field.
 
-- **Max file size:** 50MB
+- **Max file size:** 250MB
 - **Accepted MIME types:** `audio/mpeg`, `audio/wav`, `audio/x-wav`,
   `audio/mp4`, `audio/x-m4a` (mp3 / wav / m4a)
 - **Invalid type:** returns `400`
@@ -153,7 +153,7 @@ npx playwright test
 - All dependency versions are pinned exactly — no `>=` or `~` ranges.
 - Uploaded filenames are discarded; files are stored under a server-generated
   UUID plus the MIME-derived extension.
-- A 50MB upload limit is enforced server-side (streaming check; rejects
+- A 250MB upload limit is enforced server-side (streaming check; rejects
   oversized uploads mid-stream with `413`).
 - File type is validated server-side by MIME type. Only mp3, wav, and m4a are
   accepted; everything else returns `400`.

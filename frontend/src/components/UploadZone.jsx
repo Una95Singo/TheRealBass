@@ -33,7 +33,7 @@ export default function UploadZone({ onFile, disabled }) {
       }}
     >
       <p>Drop an audio file (.mp3, .wav, .m4a) or click to browse.</p>
-      <p style={{ fontSize: 12, color: "#666" }}>Max 50MB</p>
+      <p style={{ fontSize: 12, color: "#666" }}>Max 250MB</p>
       <input
         ref={inputRef}
         type="file"

@@ -125,12 +125,12 @@ test.describe("TheRealBass /transcribe flow", () => {
     await expect(err).toContainText("Unsupported file type");
   });
 
-  test("backend 413: shows 50MB limit error", async ({ page }) => {
+  test("backend 413: shows 250MB limit error", async ({ page }) => {
     await page.route(TRANSCRIBE_URL, async (route) => {
       await route.fulfill({
         status: 413,
         contentType: "application/json",
-        body: JSON.stringify({ detail: "File exceeds 50MB limit." }),
+        body: JSON.stringify({ detail: "File exceeds 250MB limit." }),
       });
     });
 
@@ -139,6 +139,6 @@ test.describe("TheRealBass /transcribe flow", () => {
 
     const err = page.locator(".error");
     await expect(err).toBeVisible();
-    await expect(err).toContainText("50MB");
+    await expect(err).toContainText("250MB");
   });
 });

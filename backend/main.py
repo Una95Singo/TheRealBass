@@ -13,7 +13,7 @@ from analyze import analyze_midi
 from isolate import isolate_bass
 from transcribe import transcribe_to_midi
 
-MAX_FILE_BYTES = 50 * 1024 * 1024  # 50MB
+MAX_FILE_BYTES = 250 * 1024 * 1024  # 250MB
 STORAGE_ROOT = Path("/tmp/therealbass").resolve()
 UPLOAD_DIR = STORAGE_ROOT / "uploads"
 STEMS_DIR = STORAGE_ROOT / "stems"
@@ -82,7 +82,7 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
                     upload_path.unlink(missing_ok=True)
                     raise HTTPException(
                         status_code=413,
-                        detail="File exceeds 50MB limit.",
+                        detail="File exceeds 250MB limit.",
                     )
                 out.write(chunk)
     except HTTPException:

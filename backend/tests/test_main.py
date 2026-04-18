@@ -184,7 +184,7 @@ class _ZeroStream(io.RawIOBase):
 
 
 def test_oversize_upload_returns_413_and_cleans_up(client):
-    total = 51 * 1024 * 1024  # 51 MB
+    total = 251 * 1024 * 1024  # 251 MB
     stream = io.BufferedReader(_ZeroStream(total))  # type: ignore[arg-type]
     with _patched_pipeline():
         resp = client.post(
@@ -192,7 +192,7 @@ def test_oversize_upload_returns_413_and_cleans_up(client):
             files={"file": ("huge.mp3", stream, "audio/mpeg")},
         )
     assert resp.status_code == 413, resp.text
-    assert "50MB" in resp.json()["detail"]
+    assert "250MB" in resp.json()["detail"]
     # Temp file must NOT persist after rejection.
     assert list(client.upload_dir.iterdir()) == []
 
