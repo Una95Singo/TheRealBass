@@ -7,6 +7,7 @@ export const sampleTranscription = {
   measures: [
     {
       measure_number: 1,
+      chord: "G",
       notes: [
         { pitch: "G2", duration: "q", start_beat: 1 },
         { pitch: "D2", duration: "q", start_beat: 2 },
@@ -16,26 +17,29 @@ export const sampleTranscription = {
     },
     {
       measure_number: 2,
+      chord: "C",
       notes: [
-        { pitch: "G2", duration: "8", start_beat: 1 },
-        { pitch: "A2", duration: "8", start_beat: 1.5 },
-        { pitch: "B2", duration: "8", start_beat: 2 },
-        { pitch: "C3", duration: "8", start_beat: 2.5 },
-        { pitch: "D3", duration: "h", start_beat: 3 },
+        { pitch: "C2", duration: "8", start_beat: 1 },
+        { pitch: "E2", duration: "8", start_beat: 1.5 },
+        { pitch: "G2", duration: "8", start_beat: 2 },
+        { pitch: "B2", duration: "8", start_beat: 2.5 },
+        { pitch: "C3", duration: "h", start_beat: 3 },
       ],
     },
     {
       measure_number: 3,
+      chord: "Am",
       notes: [
-        { pitch: "F#2", duration: "q", start_beat: 1 },
-        { pitch: "Bb2", duration: "q", start_beat: 2 },
+        { pitch: "A2", duration: "q", start_beat: 1 },
+        { pitch: "E2", duration: "q", start_beat: 2 },
         { pitch: "A2", duration: "h", start_beat: 3 },
       ],
     },
     {
       measure_number: 4,
+      chord: "D7",
       notes: [
-        { pitch: "G2", duration: "w", start_beat: 1 },
+        { pitch: "D2", duration: "w", start_beat: 1 },
       ],
     },
   ],

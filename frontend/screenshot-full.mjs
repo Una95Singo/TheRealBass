@@ -12,15 +12,15 @@ const sample = {
   bpm: 120,
   time_signature: "4/4",
   measures: [
-    { measure_number: 1, notes: [
+    { measure_number: 1, chord: "G", notes: [
       { pitch: "G2", duration: "q", start_beat: 1 },
       { pitch: "D2", duration: "q", start_beat: 2 },
       { pitch: "E2", duration: "q", start_beat: 3 },
       { pitch: "D2", duration: "q", start_beat: 4 },
     ]},
-    { measure_number: 2, notes: [
-      { pitch: "F#2", duration: "q", start_beat: 1 },
-      { pitch: "Bb2", duration: "q", start_beat: 2 },
+    { measure_number: 2, chord: "D", notes: [
+      { pitch: "D2", duration: "q", start_beat: 1 },
+      { pitch: "F#2", duration: "q", start_beat: 2 },
       { pitch: "A2", duration: "h", start_beat: 3 },
     ]},
   ],

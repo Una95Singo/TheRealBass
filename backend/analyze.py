@@ -6,6 +6,8 @@ from typing import Any
 
 from music21 import converter, meter, tempo
 
+from chords import infer_chord
+
 
 _DURATION_MAP = {
     4.0: "w",
@@ -91,5 +93,7 @@ def analyze_midi(midi_path: Path) -> dict[str, Any]:
         "key": key_name,
         "bpm": bpm,
         "time_signature": time_sig,
-        "measures": measures,
+        "measures": [
+            {**m, "chord": infer_chord(m["notes"], key_name)} for m in measures
+        ],
     }

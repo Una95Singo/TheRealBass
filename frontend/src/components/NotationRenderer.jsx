@@ -2,7 +2,8 @@ import { useEffect, useRef } from "react";
 import { Renderer, Stave, StaveNote, Accidental, Formatter, Voice } from "vexflow";
 
 const MEASURE_WIDTH = 260;
-const STAVE_HEIGHT = 140;
+const STAVE_HEIGHT = 150;
+const CHORD_PAD = 26;
 
 function toVexKey(pitch) {
   const octave = pitch.slice(-1);
@@ -31,7 +32,7 @@ export default function NotationRenderer({ data }) {
     const perRow = 4;
     const rows = Math.max(1, Math.ceil(measures.length / perRow));
     const width = Math.min(measures.length, perRow) * MEASURE_WIDTH + 40;
-    const height = rows * STAVE_HEIGHT + 40;
+    const height = rows * STAVE_HEIGHT + CHORD_PAD + 20;
 
     const renderer = new Renderer(containerRef.current, Renderer.Backends.SVG);
     renderer.resize(width, height);
@@ -41,7 +42,7 @@ export default function NotationRenderer({ data }) {
       const row = Math.floor(idx / perRow);
       const col = idx % perRow;
       const x = 20 + col * MEASURE_WIDTH;
-      const y = 20 + row * STAVE_HEIGHT;
+      const y = 20 + row * STAVE_HEIGHT + CHORD_PAD;
 
       const stave = new Stave(x, y, MEASURE_WIDTH);
       if (col === 0 && row === 0) {
@@ -51,6 +52,19 @@ export default function NotationRenderer({ data }) {
         stave.addClef("bass");
       }
       stave.setContext(ctx).draw();
+
+      if (measure.chord) {
+        ctx.save();
+        if (typeof ctx.setFont === "function") {
+          try {
+            ctx.setFont("Helvetica", 14, "bold");
+          } catch (_) {
+            /* SVG context font signature varies; ignore. */
+          }
+        }
+        ctx.fillText(measure.chord, x + 4, y - 6);
+        ctx.restore();
+      }
 
       const notes = (measure.notes || []).map((n) => {
         const note = new StaveNote({
