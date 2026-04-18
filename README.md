@@ -6,6 +6,21 @@ lead sheet with key, BPM, and time signature.
 
 Everything runs on `localhost` — no external APIs.
 
+## Quick start (macOS / Linux)
+
+From a fresh clone:
+
+```bash
+./scripts/start.sh
+```
+
+This (idempotently) creates the backend venv, installs Python + npm
+dependencies, launches both servers, and opens the app in your browser.
+Ctrl+C stops both. Requires `python3.11` and `npm` on your `PATH`.
+
+For Windows or to run the two servers in separate terminals, see
+**First-run setup** below.
+
 ## Stack
 
 - **Backend:** FastAPI, Demucs (bass isolation), Spotify Basic Pitch (MIDI
@@ -32,6 +47,9 @@ TheRealBass/
 │   │   │   └── NotationRenderer.jsx
 │   │   └── api.js
 │   └── package.json
+├── scripts/
+│   ├── setup.sh       # idempotent: venv + pip + npm install
+│   └── start.sh       # runs both servers, opens browser
 └── README.md
 ```
 
