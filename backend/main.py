@@ -91,9 +91,16 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
         upload_path.unlink(missing_ok=True)
         raise HTTPException(status_code=500, detail=f"Upload failed: {exc}")
 
+    midi_subdir = _safe_child(MIDI_DIR, MIDI_DIR / file_id)
+    midi_subdir.mkdir(parents=True, exist_ok=True)
     try:
         bass_stem = isolate_bass(upload_path, STEMS_DIR)
-        midi_path = transcribe_to_midi(bass_stem, MIDI_DIR)
+        midi_path = transcribe_to_midi(bass_stem, midi_subdir)
+        # Normalize Basic Pitch's bass_basic_pitch.mid → bass.mid for a clean URL.
+        canonical_midi = midi_subdir / "bass.mid"
+        if midi_path != canonical_midi:
+            midi_path.replace(canonical_midi)
+            midi_path = canonical_midi
         result = analyze_midi(midi_path)
     except HTTPException:
         raise
@@ -103,6 +110,7 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
     result["bass_stem_path"] = str(bass_stem)
     result["file_id"] = file_id
     result["bass_audio_url"] = f"/stems/{file_id}/bass.wav"
+    result["midi_url"] = f"/midi/{file_id}/bass.mid"
     return result
 
 
@@ -118,6 +126,17 @@ def get_bass_stem(file_id: str) -> FileResponse:
     if not bass_path.is_file():
         raise HTTPException(status_code=404, detail="Bass stem not found.")
     return FileResponse(str(bass_path), media_type="audio/wav")
+
+
+@app.get("/midi/{file_id}/bass.mid")
+def get_bass_midi(file_id: str) -> FileResponse:
+    if not _UUID_HEX_RE.match(file_id):
+        raise HTTPException(status_code=400, detail="Invalid file id.")
+
+    midi_path = _safe_child(MIDI_DIR, MIDI_DIR / file_id / "bass.mid")
+    if not midi_path.is_file():
+        raise HTTPException(status_code=404, detail="MIDI not found.")
+    return FileResponse(str(midi_path), media_type="audio/midi")
 
 
 if __name__ == "__main__":

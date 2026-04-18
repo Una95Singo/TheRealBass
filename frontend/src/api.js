@@ -5,6 +5,11 @@ export function stemAudioUrl(relativeUrl) {
   return `${API_BASE}${relativeUrl}`;
 }
 
+export function midiUrl(relativeUrl) {
+  if (!relativeUrl) return null;
+  return `${API_BASE}${relativeUrl}`;
+}
+
 export async function transcribeFile(file) {
   const form = new FormData();
   form.append("file", file);

@@ -2,11 +2,13 @@ import { useRef } from "react";
 import { jsPDF } from "jspdf";
 import { svg2pdf } from "svg2pdf.js";
 import NotationRenderer from "./NotationRenderer.jsx";
-import { stemAudioUrl } from "../api.js";
+import MidiPlayer from "./MidiPlayer.jsx";
+import { stemAudioUrl, midiUrl } from "../api.js";
 
 export default function TranscriptionView({ data, onReset }) {
   const notationRef = useRef(null);
   const audioUrl = stemAudioUrl(data.bass_audio_url);
+  const midiPreviewUrl = midiUrl(data.midi_url);
 
   async function handleDownloadPdf() {
     const svg = notationRef.current?.querySelector("svg");
@@ -49,6 +51,8 @@ export default function TranscriptionView({ data, onReset }) {
           <audio src={audioUrl} controls preload="metadata" />
         </div>
       )}
+
+      {midiPreviewUrl && <MidiPlayer url={midiPreviewUrl} />}
 
       <div className="actions">
         <button onClick={handleDownloadPdf} className="primary">

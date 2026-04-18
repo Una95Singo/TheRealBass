@@ -83,11 +83,21 @@ CANNED_RESULT = {
 
 
 def _patched_pipeline():
-    """Return a context manager that patches isolate/transcribe/analyze on main."""
+    """Return a context manager that patches isolate/transcribe/analyze on main.
+
+    transcribe_to_midi writes a tiny fake MIDI file so main.py's rename-to-
+    canonical step has something real to move.
+    """
+    def fake_transcribe(stem, out):
+        out_path = Path(out) / "bass_basic_pitch.mid"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_bytes(b"MThd")
+        return out_path
+
     return patch.multiple(
         "main",
         isolate_bass=lambda audio, out: Path(out) / "bass.wav",
-        transcribe_to_midi=lambda stem, out: Path(out) / "song.mid",
+        transcribe_to_midi=fake_transcribe,
         analyze_midi=lambda midi: dict(CANNED_RESULT),
     )
 
@@ -134,6 +144,7 @@ def test_valid_upload_returns_canned_json(client, filename, mime, extension):
     assert len(body["file_id"]) == 32
     int(body["file_id"], 16)
     assert body["bass_audio_url"] == f"/stems/{body['file_id']}/bass.wav"
+    assert body["midi_url"] == f"/midi/{body['file_id']}/bass.mid"
 
     # Stored file should have the right extension and a UUID-hex stem.
     stored = list(client.upload_dir.iterdir())
@@ -288,6 +299,49 @@ def test_get_bass_stem_missing_returns_404(client):
 def test_get_bass_stem_rejects_bad_file_id(client, bad_id):
     resp = client.get(f"/stems/{bad_id}/bass.wav")
     # FastAPI may 404 on path-mismatch (e.g. slashes); 400 on regex reject.
+    assert resp.status_code in (400, 404)
+    if resp.status_code == 400:
+        assert "Invalid file id" in resp.json()["detail"]
+
+
+# ---------------------------------------------------------------------------
+# /midi/{file_id}/bass.mid
+# ---------------------------------------------------------------------------
+def _write_fake_midi(midi_dir: Path, file_id: str, content: bytes = b"MThd") -> Path:
+    target_dir = midi_dir / file_id
+    target_dir.mkdir(parents=True, exist_ok=True)
+    midi = target_dir / "bass.mid"
+    midi.write_bytes(content)
+    return midi
+
+
+def test_get_bass_midi_returns_file(client):
+    file_id = "c" * 32
+    _write_fake_midi(client.midi_dir, file_id, b"MThdFAKEMIDI")
+    resp = client.get(f"/midi/{file_id}/bass.mid")
+    assert resp.status_code == 200
+    assert resp.headers["content-type"] == "audio/midi"
+    assert resp.content == b"MThdFAKEMIDI"
+
+
+def test_get_bass_midi_missing_returns_404(client):
+    file_id = "d" * 32
+    resp = client.get(f"/midi/{file_id}/bass.mid")
+    assert resp.status_code == 404
+
+
+@pytest.mark.parametrize(
+    "bad_id",
+    [
+        "../../etc/passwd",
+        "not-a-hex-id",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "a" * 31,
+        "a" * 33,
+    ],
+)
+def test_get_bass_midi_rejects_bad_file_id(client, bad_id):
+    resp = client.get(f"/midi/{bad_id}/bass.mid")
     assert resp.status_code in (400, 404)
     if resp.status_code == 400:
         assert "Invalid file id" in resp.json()["detail"]

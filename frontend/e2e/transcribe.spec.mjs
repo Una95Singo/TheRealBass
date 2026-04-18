@@ -47,9 +47,16 @@ const sampleTranscription = {
   bass_stem_path: "/tmp/therealbass/stems/htdemucs/abc/bass.wav",
   file_id: "abc00000000000000000000000000000",
   bass_audio_url: "/stems/abc00000000000000000000000000000/bass.wav",
+  midi_url: "/midi/abc00000000000000000000000000000/bass.mid",
 };
 
 const fakeMp3Buffer = Buffer.from([0xff, 0xfb, 0x90, 0x44, 0x00, 0x00, 0x00, 0x00]);
+
+// Minimal valid format-0 MIDI file (header + empty track + end-of-track).
+const minimalMidi = Buffer.from([
+  0x4d, 0x54, 0x68, 0x64, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x01, 0x00, 0x60,
+  0x4d, 0x54, 0x72, 0x6b, 0x00, 0x00, 0x00, 0x04, 0x00, 0xff, 0x2f, 0x00,
+]);
 
 async function uploadFakeMp3(page) {
   const input = page.locator('input[type="file"]');
@@ -65,6 +72,9 @@ test.describe("TheRealBass /transcribe flow", () => {
     // Stub the audio endpoint so the <audio> element doesn't emit a real request.
     await page.route("**/stems/**/bass.wav", async (route) => {
       await route.fulfill({ status: 200, contentType: "audio/wav", body: "" });
+    });
+    await page.route("**/midi/**/bass.mid", async (route) => {
+      await route.fulfill({ status: 200, contentType: "audio/midi", body: minimalMidi });
     });
     await page.route(TRANSCRIBE_URL, async (route) => {
       await route.fulfill({
@@ -106,6 +116,10 @@ test.describe("TheRealBass /transcribe flow", () => {
 
     // PDF download button is present.
     await expect(page.getByRole("button", { name: /Download PDF/i })).toBeVisible();
+
+    // MIDI preview player is mounted with a Play button.
+    await expect(page.locator(".midi-player")).toBeVisible();
+    await expect(page.getByRole("button", { name: /Play MIDI/i })).toBeVisible();
   });
 
   test("backend 400: shows Unsupported file type error", async ({ page }) => {

@@ -75,6 +75,56 @@ body {
 }
 .bass-audio audio { width: 100%; }
 
+.midi-player {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #fff;
+  border-radius: 8px;
+}
+.midi-player.error { color: #b00020; }
+.midi-player label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 6px;
+}
+.midi-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.midi-controls button {
+  padding: 4px 12px;
+  border: 1px solid #888;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.midi-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.midi-progress {
+  flex: 1;
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.midi-progress-bar {
+  height: 100%;
+  background: #0066cc;
+  transition: width 0.1s linear;
+}
+.midi-time {
+  font-size: 12px;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+  min-width: 72px;
+  text-align: right;
+}
+
 .actions {
   display: flex;
   gap: 12px;
