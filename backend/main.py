@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import sys
 import uuid
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from fastapi.responses import FileResponse
 
 from analyze import analyze_midi
 from isolate import isolate_bass
+from rhythm_log import write_artifact as write_rhythm_artifact
 from segment import detect_sections
 from transcribe import transcribe_to_midi
 
@@ -19,6 +21,10 @@ STORAGE_ROOT = Path("/tmp/therealbass").resolve()
 UPLOAD_DIR = STORAGE_ROOT / "uploads"
 STEMS_DIR = STORAGE_ROOT / "stems"
 MIDI_DIR = STORAGE_ROOT / "midi"
+# artifacts/ lives at the repo root; diagnostic rhythm logs get committed
+# ad-hoc from there so rhythm problems on real audio can be reviewed offline.
+REPO_ROOT = Path(__file__).resolve().parent.parent
+RHYTHM_LOG_DIR = REPO_ROOT / "artifacts" / "rhythm-logs"
 
 ALLOWED_MIME_TYPES = {
     "audio/mpeg": ".mp3",
@@ -96,7 +102,9 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
     midi_subdir.mkdir(parents=True, exist_ok=True)
     try:
         bass_stem = isolate_bass(upload_path, STEMS_DIR)
-        midi_path, note_events = transcribe_to_midi(bass_stem, midi_subdir)
+        midi_path, note_events, debug_info = transcribe_to_midi(
+            bass_stem, midi_subdir, return_debug=True
+        )
         # Normalize Basic Pitch's bass_basic_pitch.mid → bass.mid for a clean URL.
         canonical_midi = midi_subdir / "bass.mid"
         if midi_path != canonical_midi:
@@ -107,6 +115,17 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
         raise
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Processing failed: {exc}")
+
+    # Best-effort rhythm-log artifact for offline debugging. A failure here
+    # must never break the transcription response.
+    try:
+        write_rhythm_artifact(
+            debug_info,
+            {"file_id": file_id, "original_filename": file.filename},
+            RHYTHM_LOG_DIR,
+        )
+    except Exception as exc:
+        print(f"[rhythm_log] failed to write artifact: {exc}", file=sys.stderr)
 
     # Section analysis is best-effort: a failure here (missing librosa,
     # decode error, very short clip) must not kill the transcription.

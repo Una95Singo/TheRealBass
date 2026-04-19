@@ -38,7 +38,11 @@ def _install_stub_modules() -> None:
 
     # Stub transcribe
     transcribe_stub = types.ModuleType("transcribe")
-    transcribe_stub.transcribe_to_midi = lambda stem, out_dir: Path(out_dir) / "out.mid"
+    transcribe_stub.transcribe_to_midi = lambda stem, out_dir, **_: (
+        Path(out_dir) / "out.mid",
+        [],
+        {},
+    )
     sys.modules["transcribe"] = transcribe_stub
 
     # Stub segment — keeps librosa out of the test venv.
@@ -59,13 +63,15 @@ def client(tmp_path, monkeypatch):
     upload_dir = tmp_path / "uploads"
     stems_dir = tmp_path / "stems"
     midi_dir = tmp_path / "midi"
-    for d in (upload_dir, stems_dir, midi_dir):
+    rhythm_log_dir = tmp_path / "rhythm-logs"
+    for d in (upload_dir, stems_dir, midi_dir, rhythm_log_dir):
         d.mkdir(parents=True, exist_ok=True)
 
     monkeypatch.setattr(main, "UPLOAD_DIR", upload_dir)
     monkeypatch.setattr(main, "STEMS_DIR", stems_dir)
     monkeypatch.setattr(main, "MIDI_DIR", midi_dir)
     monkeypatch.setattr(main, "STORAGE_ROOT", tmp_path)
+    monkeypatch.setattr(main, "RHYTHM_LOG_DIR", rhythm_log_dir)
 
     with TestClient(main.app) as c:
         c.upload_dir = upload_dir  # type: ignore[attr-defined]
@@ -93,11 +99,11 @@ def _patched_pipeline():
     transcribe_to_midi writes a tiny fake MIDI file so main.py's rename-to-
     canonical step has something real to move.
     """
-    def fake_transcribe(stem, out):
+    def fake_transcribe(stem, out, **_):
         out_path = Path(out) / "bass_basic_pitch.mid"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_bytes(b"MThd")
-        return out_path, []
+        return out_path, [], {}
 
     return patch.multiple(
         "main",
@@ -174,11 +180,11 @@ def test_upload_surfaces_section_labels_when_detector_returns_them(client):
         ],
     }
 
-    def fake_transcribe(stem, out):
+    def fake_transcribe(stem, out, **_):
         out_path = Path(out) / "bass_basic_pitch.mid"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_bytes(b"MThd")
-        return out_path, []
+        return out_path, [], {}
 
     with patch.multiple(
         "main",
@@ -217,11 +223,11 @@ def test_upload_survives_detector_exception(client):
     def boom(*a, **kw):
         raise RuntimeError("librosa blew up")
 
-    def fake_transcribe(stem, out):
+    def fake_transcribe(stem, out, **_):
         out_path = Path(out) / "bass_basic_pitch.mid"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_bytes(b"MThd")
-        return out_path, []
+        return out_path, [], {}
 
     with patch.multiple(
         "main",

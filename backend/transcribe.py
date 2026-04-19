@@ -41,6 +41,10 @@ PITCH_WIN_S = 0.10
 VOICED_THRESH = 0.3
 MIN_PITCH_AUDIO_S = 0.03  # need at least ~30 ms to get a stable pYIN read
 DEFAULT_VELOCITY = 90
+# Cap the beat-grid snap well under mir_eval's 50 ms onset tolerance. Change
+# 1 of the rhythm-fix plan makes this adaptive; for change 0 we only lift
+# the literal into a constant so the debug artifact can record it.
+SNAP_MAX_SHIFT_S = 0.03
 
 
 def _pitch_for_window(
@@ -95,29 +99,36 @@ def _apply_beat_grid(
     midi_data: pretty_midi.PrettyMIDI,
     y: np.ndarray,
     sr: int,
-) -> None:
+) -> dict[str, Any]:
     """Overwrite the tempo map + snap onsets to the detected beat grid.
 
     Mutates ``midi_data`` in place. Silently leaves the MIDI unchanged if
-    beat tracking fails or produces too few beats to be useful.
+    beat tracking fails or produces too few beats to be useful. Returns
+    a dict describing what the snap did so callers can emit diagnostics;
+    keys are absent when the corresponding step was skipped.
     """
+    info: dict[str, Any] = {}
     try:
         tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
     except Exception:
-        return
+        return info
 
     if beat_frames.size < 4:
-        return
+        return info
 
     beat_times = librosa.frames_to_time(beat_frames, sr=sr).tolist()
     tempo_bpm = float(np.atleast_1d(tempo).ravel()[0])
     if not np.isfinite(tempo_bpm) or tempo_bpm <= 0:
-        return
+        return info
 
     # pretty_midi stores tempo changes internally; the supported way to
     # replace them is to clear the private buffers and re-initialise.
     midi_data._tick_scales = [(0, 60.0 / (tempo_bpm * midi_data.resolution))]
     midi_data._update_tick_to_time(0)
+
+    info["tempo_bpm"] = tempo_bpm
+    info["beat_times"] = beat_times
+    info["snap_max_shift_s"] = SNAP_MAX_SHIFT_S
 
     for inst in midi_data.instruments:
         if inst.is_drum:
@@ -127,16 +138,23 @@ def _apply_beat_grid(
         # At this size the snap only cleans up jitter — onsets that are
         # already close to truth stay put, and onsets far off the grid
         # (likely spurious) don't get yanked into a wrong slot.
-        snapped = snap_to_beat_grid(starts, beat_times, max_shift_s=0.03)
+        snapped = snap_to_beat_grid(starts, beat_times, max_shift_s=SNAP_MAX_SHIFT_S)
         for note, new_start in zip(inst.notes, snapped):
             duration = note.end - note.start
             note.start = new_start
             note.end = new_start + duration
+    return info
 
 
 def transcribe_to_midi(
-    bass_audio: Path, output_dir: Path
-) -> tuple[Path, list[tuple[float, float, int, float, Any]]]:
+    bass_audio: Path,
+    output_dir: Path,
+    *,
+    return_debug: bool = False,
+) -> (
+    tuple[Path, list[tuple[float, float, int, float, Any]]]
+    | tuple[Path, list[tuple[float, float, int, float, Any]], dict[str, Any]]
+):
     """Transcribe an isolated bass stem to MIDI.
 
     Returns (midi_path, note_events). Each note_event is
@@ -144,6 +162,11 @@ def transcribe_to_midi(
     confidence in [0, 1] is pYIN's median voicing probability for the
     note, kept in the same shape Basic Pitch used so the confidence
     plumbing downstream didn't have to change.
+
+    If ``return_debug`` is True, returns an additional ``debug`` dict
+    with pre-snap onset times, post-snap starts, placeholders for
+    release times, and beat-track metadata. Used by main.py to write
+    a per-upload JSON artifact for offline review.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -155,6 +178,8 @@ def transcribe_to_midi(
     midi_data = pretty_midi.PrettyMIDI()
     instrument = pretty_midi.Instrument(program=33)  # Electric Bass (finger)
     note_events: list[tuple[float, float, int, float, Any]] = []
+    # Pre-snap onset time per accepted note (indices align with instrument.notes).
+    kept_raw_onsets: list[float] = []
 
     for i, t_start in enumerate(onset_times):
         t_end = onset_times[i + 1] if i + 1 < len(onset_times) else duration
@@ -175,9 +200,10 @@ def transcribe_to_midi(
             )
         )
         note_events.append((float(t_start), float(t_end), pitch, confidence, []))
+        kept_raw_onsets.append(float(t_start))
 
     midi_data.instruments.append(instrument)
-    _apply_beat_grid(midi_data, y, sr)
+    snap_info = _apply_beat_grid(midi_data, y, sr)
 
     # Re-sync note_events onsets with the snapped MIDI onsets so the
     # downstream confidence matcher (±0.3 s tolerance) keeps lining up.
@@ -190,4 +216,24 @@ def transcribe_to_midi(
 
     midi_path = output_dir / f"{bass_audio.stem}.mid"
     midi_data.write(str(midi_path))
-    return midi_path, note_events
+
+    if not return_debug:
+        return midi_path, note_events
+
+    debug: dict[str, Any] = {
+        "sample_rate": int(sr) if sr else SAMPLE_RATE,
+        "audio_duration_s": float(duration),
+        "raw_onsets_all": [float(t) for t in onset_times],
+        "raw_onsets_kept": list(kept_raw_onsets),
+        "snapped_starts": [float(n.start) for n in snapped_notes],
+        "note_ends": [float(n.end) for n in snapped_notes],
+        "pitches": [int(n.pitch) for n in snapped_notes],
+        # Release detection lands in change 4; leave an empty placeholder
+        # so artifact consumers see the same schema across versions.
+        "releases": [None] * len(snapped_notes),
+        "confidences": [float(ne[3]) for ne in note_events],
+        "tempo_bpm": snap_info.get("tempo_bpm"),
+        "beat_times": snap_info.get("beat_times", []),
+        "snap_max_shift_s": snap_info.get("snap_max_shift_s"),
+    }
+    return midi_path, note_events, debug
