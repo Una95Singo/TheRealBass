@@ -11,3 +11,6 @@ dist/
 test-results/
 playwright-report/
 
+# Scratch modules from experiments / bake-offs — not shipped.
+backend/scratch/
+
