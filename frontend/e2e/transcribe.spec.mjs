@@ -11,6 +11,7 @@ const sampleTranscription = {
     {
       measure_number: 1,
       chord: "G",
+      section: "A",
       notes: [
         { pitch: "G2", duration: "q", start_beat: 1 },
         { pitch: "D2", duration: "q", start_beat: 2 },
@@ -21,6 +22,7 @@ const sampleTranscription = {
     {
       measure_number: 2,
       chord: "C",
+      section: "A",
       notes: [
         { pitch: "C2", duration: "8", start_beat: 1 },
         { pitch: "E2", duration: "8", start_beat: 1.5 },
@@ -32,6 +34,7 @@ const sampleTranscription = {
     {
       measure_number: 3,
       chord: "Am",
+      section: "B",
       notes: [
         { pitch: "A2", duration: "q", start_beat: 1 },
         { pitch: "E2", duration: "q", start_beat: 2 },
@@ -41,6 +44,7 @@ const sampleTranscription = {
     {
       measure_number: 4,
       chord: "D7",
+      section: "B",
       notes: [{ pitch: "D2", duration: "w", start_beat: 1, confidence: 0.3 }],
     },
   ],
@@ -134,6 +138,13 @@ test.describe("TheRealBass /transcribe flow", () => {
     await expect(page.locator(".confidence-legend")).toBeVisible();
     const orangeFills = await page.locator('.notation svg [fill="#c26a1b"]').count();
     expect(orangeFills).toBeGreaterThan(0);
+
+    // Rehearsal letters mark each section start exactly once (measures 1 & 3),
+    // never mid-section. ">A</text>" doesn't collide with ">Am</text>".
+    const aMarks = (svgText.match(/>A<\/text>/g) || []).length;
+    const bMarks = (svgText.match(/>B<\/text>/g) || []).length;
+    expect(aMarks).toBe(1);
+    expect(bMarks).toBe(1);
   });
 
   test("backend 400: shows Unsupported file type error", async ({ page }) => {

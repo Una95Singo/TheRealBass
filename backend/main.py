@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse
 
 from analyze import analyze_midi
 from isolate import isolate_bass
+from segment import detect_sections
 from transcribe import transcribe_to_midi
 
 MAX_FILE_BYTES = 250 * 1024 * 1024  # 250MB
@@ -106,6 +107,21 @@ async def transcribe_endpoint(file: UploadFile = File(...)) -> dict:
         raise
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Processing failed: {exc}")
+
+    # Section analysis is best-effort: a failure here (missing librosa,
+    # decode error, very short clip) must not kill the transcription.
+    try:
+        sections = detect_sections(
+            upload_path,
+            bpm=int(result["bpm"]),
+            beats_per_measure=int(result["time_signature"].split("/")[0]),
+            num_measures=len(result["measures"]),
+        )
+    except Exception:
+        sections = None
+    if sections and len(sections) == len(result["measures"]):
+        for measure, label in zip(result["measures"], sections):
+            measure["section"] = label
 
     result["bass_stem_path"] = str(bass_stem)
     result["file_id"] = file_id

@@ -8,6 +8,7 @@ export const sampleTranscription = {
     {
       measure_number: 1,
       chord: "G",
+      section: "A",
       notes: [
         { pitch: "G2", duration: "q", start_beat: 1 },
         { pitch: "D2", duration: "q", start_beat: 2 },
@@ -18,6 +19,7 @@ export const sampleTranscription = {
     {
       measure_number: 2,
       chord: "C",
+      section: "A",
       notes: [
         { pitch: "C2", duration: "8", start_beat: 1 },
         { pitch: "E2", duration: "8", start_beat: 1.5 },
@@ -29,6 +31,7 @@ export const sampleTranscription = {
     {
       measure_number: 3,
       chord: "Am",
+      section: "B",
       notes: [
         { pitch: "A2", duration: "q", start_beat: 1 },
         { pitch: "E2", duration: "q", start_beat: 2 },
@@ -38,6 +41,7 @@ export const sampleTranscription = {
     {
       measure_number: 4,
       chord: "D7",
+      section: "B",
       notes: [
         { pitch: "D2", duration: "w", start_beat: 1 },
       ],

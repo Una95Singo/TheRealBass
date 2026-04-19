@@ -41,6 +41,11 @@ def _install_stub_modules() -> None:
     transcribe_stub.transcribe_to_midi = lambda stem, out_dir: Path(out_dir) / "out.mid"
     sys.modules["transcribe"] = transcribe_stub
 
+    # Stub segment — keeps librosa out of the test venv.
+    segment_stub = types.ModuleType("segment")
+    segment_stub.detect_sections = lambda *a, **kw: None
+    sys.modules["segment"] = segment_stub
+
 
 _install_stub_modules()
 
@@ -98,7 +103,11 @@ def _patched_pipeline():
         "main",
         isolate_bass=lambda audio, out: Path(out) / "bass.wav",
         transcribe_to_midi=fake_transcribe,
-        analyze_midi=lambda midi, note_events=None: dict(CANNED_RESULT),
+        analyze_midi=lambda midi, note_events=None: {
+            **CANNED_RESULT,
+            "measures": [dict(m) for m in CANNED_RESULT["measures"]],
+        },
+        detect_sections=lambda *a, **kw: None,
     )
 
 
@@ -152,6 +161,80 @@ def test_valid_upload_returns_canned_json(client, filename, mime, extension):
     assert stored[0].suffix == extension
     assert len(stored[0].stem) == 32
     int(stored[0].stem, 16)  # must be valid hex
+
+
+def test_upload_surfaces_section_labels_when_detector_returns_them(client):
+    """When detect_sections returns labels, each measure gets a `section` field."""
+    canned = {
+        "key": "A minor",
+        "bpm": 100,
+        "time_signature": "4/4",
+        "measures": [
+            {"measure_number": i + 1, "notes": []} for i in range(4)
+        ],
+    }
+
+    def fake_transcribe(stem, out):
+        out_path = Path(out) / "bass_basic_pitch.mid"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_bytes(b"MThd")
+        return out_path, []
+
+    with patch.multiple(
+        "main",
+        isolate_bass=lambda audio, out: Path(out) / "bass.wav",
+        transcribe_to_midi=fake_transcribe,
+        analyze_midi=lambda midi, note_events=None: {
+            **canned,
+            "measures": [dict(m) for m in canned["measures"]],
+        },
+        detect_sections=lambda *a, **kw: ["A", "A", "B", "B"],
+    ):
+        resp = client.post(
+            "/transcribe",
+            files={"file": ("song.mp3", b"bytes", "audio/mpeg")},
+        )
+    assert resp.status_code == 200, resp.text
+    body = resp.json()
+    assert [m["section"] for m in body["measures"]] == ["A", "A", "B", "B"]
+
+
+def test_upload_omits_section_when_detector_returns_none(client):
+    """A detector that returns None must not add `section` to any measure."""
+    with _patched_pipeline():
+        resp = client.post(
+            "/transcribe",
+            files={"file": ("song.mp3", b"bytes", "audio/mpeg")},
+        )
+    assert resp.status_code == 200, resp.text
+    body = resp.json()
+    for measure in body["measures"]:
+        assert "section" not in measure
+
+
+def test_upload_survives_detector_exception(client):
+    """An exception inside detect_sections must not fail the whole request."""
+    def boom(*a, **kw):
+        raise RuntimeError("librosa blew up")
+
+    def fake_transcribe(stem, out):
+        out_path = Path(out) / "bass_basic_pitch.mid"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_bytes(b"MThd")
+        return out_path, []
+
+    with patch.multiple(
+        "main",
+        isolate_bass=lambda audio, out: Path(out) / "bass.wav",
+        transcribe_to_midi=fake_transcribe,
+        analyze_midi=lambda midi, note_events=None: dict(CANNED_RESULT),
+        detect_sections=boom,
+    ):
+        resp = client.post(
+            "/transcribe",
+            files={"file": ("song.mp3", b"bytes", "audio/mpeg")},
+        )
+    assert resp.status_code == 200, resp.text
 
 
 # ---------------------------------------------------------------------------

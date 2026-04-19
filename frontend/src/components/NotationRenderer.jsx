@@ -14,7 +14,7 @@ import {
 const MEASURE_WIDTH = 260;
 const STAVE_GAP = 90;        // vertical distance from standard stave to tab stave
 const ROW_HEIGHT = 230;      // total vertical footprint per row (standard + tab + pad)
-const CHORD_PAD = 26;
+const CHORD_PAD = 48;        // headroom above each row for rehearsal letter + chord
 
 // 4-string bass, standard tuning. VexFlow numbers strings top-to-bottom in tab
 // (string 1 = highest-pitched). Open-string MIDI for [G2, D2, A1, E1].
@@ -83,11 +83,39 @@ export default function NotationRenderer({ data }) {
     renderer.resize(width, height);
     const ctx = renderer.getContext();
 
+    let prevSection = null;
     measures.forEach((measure, idx) => {
       const row = Math.floor(idx / perRow);
       const col = idx % perRow;
       const x = 20 + col * MEASURE_WIDTH;
       const y = 20 + row * ROW_HEIGHT + CHORD_PAD;
+
+      // Rehearsal letter: boxed bold A/B/C above the first measure of each
+      // new section (per lead-sheet convention — never re-label mid-section).
+      if (measure.section && measure.section !== prevSection) {
+        const markX = x + 2;
+        const markY = y - 40;
+        const boxW = 22;
+        const boxH = 22;
+        ctx.save();
+        if (typeof ctx.beginPath === "function") {
+          ctx.beginPath();
+          ctx.moveTo(markX, markY);
+          ctx.lineTo(markX + boxW, markY);
+          ctx.lineTo(markX + boxW, markY + boxH);
+          ctx.lineTo(markX, markY + boxH);
+          ctx.lineTo(markX, markY);
+          if (typeof ctx.stroke === "function") ctx.stroke();
+        }
+        if (typeof ctx.setFont === "function") {
+          try {
+            ctx.setFont("Helvetica", 14, "bold");
+          } catch (_) { /* SVG context font signature varies; ignore. */ }
+        }
+        ctx.fillText(measure.section, markX + 6, markY + 16);
+        ctx.restore();
+      }
+      prevSection = measure.section || prevSection;
 
       const stave = new Stave(x, y, MEASURE_WIDTH);
       if (col === 0 && row === 0) {
