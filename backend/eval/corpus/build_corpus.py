@@ -93,6 +93,20 @@ def walkup_95bpm() -> None:
     _write("walkup_95bpm", 95.0, events)
 
 
+def dotted8_rests_100bpm() -> None:
+    # 4 bars at 100 BPM. Notes only on beats 1 and 3, each a dotted-8th
+    # (0.75 beats), beats 2 and 4 fully silent. Forces the pipeline to
+    # cut notes short where the next onset is far away — exposes the
+    # "note.end = next_onset" sustain bug that the rhythm-logs caught
+    # on real audio.
+    events = []
+    pitches = [33, 38, 33, 38, 33, 38, 33, 38]  # A1, D2 alternating
+    for bar in range(4):
+        events.append((bar * 4 + 0, 0.75, pitches[bar * 2]))
+        events.append((bar * 4 + 2, 0.75, pitches[bar * 2 + 1]))
+    _write("dotted8_rests_100bpm", 100.0, events)
+
+
 def main() -> None:
     HERE.mkdir(parents=True, exist_ok=True)
     quarters_80bpm()
@@ -100,6 +114,7 @@ def main() -> None:
     sixteenths_100bpm()
     shuffle_110bpm()
     walkup_95bpm()
+    dotted8_rests_100bpm()
 
 
 if __name__ == "__main__":
