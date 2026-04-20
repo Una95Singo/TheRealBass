@@ -14,3 +14,7 @@ playwright-report/
 # Scratch modules from experiments / bake-offs — not shipped.
 backend/scratch/
 
+# Real-bass eval corpus audio — recordings stay local; only the
+# manifest + ground-truth MIDI are committed.
+backend/eval/corpus/real/audio/
+

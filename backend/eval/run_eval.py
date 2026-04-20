@@ -12,6 +12,7 @@ PNG diff rolls + stereo A/B WAVs + a markdown index for mobile review.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import tempfile
 from datetime import datetime, timezone
@@ -81,10 +82,33 @@ def score_one(gt_midi: Path, est_midi: Path) -> dict[str, float]:
     }
 
 
-def run_pipeline(wav_path: Path, out_dir: Path) -> Path:
+def run_pipeline(wav_path: Path, out_dir: Path, *, octave_check: bool = False) -> Path:
     """Run the pipeline-under-test on a WAV, return path to produced MIDI."""
-    midi_path, _ = transcribe_to_midi(wav_path, out_dir)
+    midi_path, _ = transcribe_to_midi(wav_path, out_dir, octave_check=octave_check)
     return midi_path
+
+
+def _load_manifest(corpus_dir: Path) -> list[tuple[Path, Path, dict]] | None:
+    """Return [(audio_path, gt_midi_path, entry_dict), ...] from manifest.json
+    if present. None means "no manifest, use synth-from-MIDI fallback"."""
+    manifest_path = corpus_dir / "manifest.json"
+    if not manifest_path.is_file():
+        return None
+    data = json.loads(manifest_path.read_text())
+    out: list[tuple[Path, Path, dict]] = []
+    for entry in data.get("clips", []):
+        audio = corpus_dir / entry["audio"]
+        midi = corpus_dir / entry["midi"]
+        if not audio.is_file():
+            print(f"  [skip] {entry['slug']}: audio missing ({audio})",
+                  file=sys.stderr)
+            continue
+        if not midi.is_file():
+            print(f"  [skip] {entry['slug']}: midi missing ({midi})",
+                  file=sys.stderr)
+            continue
+        out.append((audio, midi, entry))
+    return out
 
 
 def main() -> int:
@@ -97,14 +121,30 @@ def main() -> int:
                               f"Default: {DEFAULT_ARTIFACTS_ROOT}/<timestamp>"))
     parser.add_argument("--no-artifacts", action="store_true",
                         help="Skip writing the PNG/WAV/markdown artifact bundle.")
+    parser.add_argument("--octave-check", action="store_true",
+                        help="Run CREPE octave-check QC on Basic Pitch output. "
+                             "Adds ~50 ms per note; off by default.")
     args = parser.parse_args()
 
-    clips = sorted(p for p in args.corpus.glob("*.mid"))
-    if args.only:
-        clips = [p for p in clips if args.only in p.stem]
-    if not clips:
-        print(f"no MIDI files under {args.corpus}", file=sys.stderr)
-        return 1
+    # Real-corpus mode: corpus dir contains manifest.json and we eval
+    # against the listed real audio. Synth mode: glob *.mid and synthesise.
+    manifest_clips = _load_manifest(args.corpus)
+    if manifest_clips is not None:
+        if args.only:
+            manifest_clips = [
+                t for t in manifest_clips if args.only in t[2].get("slug", "")
+            ]
+        if not manifest_clips:
+            print(f"no clips matched in {args.corpus}/manifest.json",
+                  file=sys.stderr)
+            return 1
+    else:
+        clips = sorted(p for p in args.corpus.glob("*.mid"))
+        if args.only:
+            clips = [p for p in clips if args.only in p.stem]
+        if not clips:
+            print(f"no MIDI files under {args.corpus}", file=sys.stderr)
+            return 1
 
     header = f"{'clip':<24}  {'onset':>7}  {'+pitch':>7}  {'+offset':>7}  {'n_gt':>5}  {'n_est':>5}"
     print(header)
@@ -120,19 +160,26 @@ def main() -> int:
     rows: list[tuple[str, dict[str, float]]] = []
     with tempfile.TemporaryDirectory(prefix="therealbass-eval-") as tmpdir:
         tmp = Path(tmpdir)
-        for gt in clips:
-            wav = synthesize_midi_to_wav(gt, tmp / f"{gt.stem}.wav")
-            est_dir = tmp / f"{gt.stem}_out"
-            est_dir.mkdir()
+        if manifest_clips is not None:
+            jobs = [(audio, gt, entry["slug"]) for audio, gt, entry in manifest_clips]
+        else:
+            jobs = []
+            for gt in clips:
+                wav = synthesize_midi_to_wav(gt, tmp / f"{gt.stem}.wav")
+                jobs.append((wav, gt, gt.stem))
+
+        for wav, gt, name in jobs:
+            est_dir = tmp / f"{name}_out"
+            est_dir.mkdir(exist_ok=True)
             try:
-                est_midi = run_pipeline(wav, est_dir)
+                est_midi = run_pipeline(wav, est_dir, octave_check=args.octave_check)
             except Exception as exc:
-                print(f"{gt.stem:<24}  FAILED: {exc}")
+                print(f"{name:<24}  FAILED: {exc}")
                 continue
             metrics = score_one(gt, est_midi)
-            rows.append((gt.stem, metrics))
+            rows.append((name, metrics))
             print(
-                f"{gt.stem:<24}  {metrics['onset_f1']:>7.3f}  "
+                f"{name:<24}  {metrics['onset_f1']:>7.3f}  "
                 f"{metrics['onset_pitch_f1']:>7.3f}  "
                 f"{metrics['onset_pitch_offset_f1']:>7.3f}  "
                 f"{metrics['n_gt']:>5}  {metrics['n_est']:>5}"
@@ -140,15 +187,15 @@ def main() -> int:
             if artifact_root is not None:
                 try:
                     write_clip_artifacts(
-                        clip_name=gt.stem,
+                        clip_name=name,
                         audio_path=wav,
                         gt_midi=gt,
                         est_midi=est_midi,
                         metrics=metrics,
-                        out_dir=artifact_root / gt.stem,
+                        out_dir=artifact_root / name,
                     )
                 except Exception as exc:  # artifacts are best-effort
-                    print(f"  [artifacts] {gt.stem}: {exc}", file=sys.stderr)
+                    print(f"  [artifacts] {name}: {exc}", file=sys.stderr)
 
     means: dict[str, float] = {}
     if rows:
