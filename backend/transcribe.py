@@ -27,6 +27,7 @@ import pretty_midi
 from basic_pitch import ICASSP_2022_MODEL_PATH
 from basic_pitch.inference import Model, predict
 
+from octave_check import apply_octave_check
 from quantize_snap import snap_to_beat_grid
 
 
@@ -108,6 +109,7 @@ def transcribe_to_midi(
     output_dir: Path,
     *,
     return_debug: bool = False,
+    octave_check: bool = False,
 ) -> (
     tuple[Path, list[tuple[float, float, int, float, Any]]]
     | tuple[Path, list[tuple[float, float, int, float, Any]], dict[str, Any]]
@@ -122,6 +124,11 @@ def transcribe_to_midi(
     If ``return_debug`` is True, returns an additional ``debug`` dict
     with the raw and snapped note arrays plus beat-track metadata. Used
     by main.py to write a per-upload JSON artifact for offline review.
+
+    If ``octave_check`` is True, runs CREPE on each note's audio slice
+    and either transposes Basic Pitch down an octave when CREPE catches
+    a harmonic-latch error or drops the note when CREPE strongly
+    disagrees. Adds ~50 ms per note on CPU; opt-in.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -149,6 +156,30 @@ def transcribe_to_midi(
     # ran at its own internal rate; librosa beat-track wants its own.
     y, sr = librosa.load(str(bass_audio), sr=SAMPLE_RATE, mono=True)
     duration = len(y) / sr if sr else 0.0
+
+    octave_check_counters: dict[str, int] = {}
+    if octave_check:
+        # Snapshot per-note amplitudes by start time so we can preserve
+        # them when octave_check drops/transposes notes (start times are
+        # untouched by apply_octave_check; the beat snap below is what
+        # would change them, and runs after this).
+        amp_by_start = {float(ne[0]): float(ne[3]) for ne in note_events}
+        for inst in midi_data.instruments:
+            if inst.is_drum:
+                continue
+            counters = apply_octave_check(inst.notes, y, sr)
+            for k, v in counters.items():
+                octave_check_counters[k] = octave_check_counters.get(k, 0) + v
+        note_events = [
+            (
+                float(n.start), float(n.end), int(n.pitch),
+                amp_by_start.get(float(n.start), 1.0),
+                [],
+            )
+            for inst in midi_data.instruments
+            if not inst.is_drum
+            for n in inst.notes
+        ]
 
     snap_info = _apply_beat_grid(midi_data, y, sr)
 
@@ -189,5 +220,6 @@ def transcribe_to_midi(
         "tempo_bpm": snap_info.get("tempo_bpm"),
         "beat_times": snap_info.get("beat_times", []),
         "snap_max_shift_s": snap_info.get("snap_max_shift_s"),
+        "octave_check": octave_check_counters or None,
     }
     return midi_path, note_events, debug
