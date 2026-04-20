@@ -1,0 +1,52 @@
+{
+  "n_clips": 6,
+  "means": {
+    "onset_f1": 0.5884055500737991,
+    "onset_pitch_f1": 0.5766799736602469,
+    "onset_pitch_offset_f1": 0.34870250304115613
+  },
+  "clips": {
+    "dotted8_rests_100bpm": {
+      "onset_f1": 0.6399999999999999,
+      "onset_pitch_f1": 0.6399999999999999,
+      "onset_pitch_offset_f1": 0.4,
+      "n_gt": 8,
+      "n_est": 17
+    },
+    "eighths_120bpm": {
+      "onset_f1": 0.547945205479452,
+      "onset_pitch_f1": 0.502283105022831,
+      "onset_pitch_offset_f1": 0.1278538812785388,
+      "n_gt": 64,
+      "n_est": 155
+    },
+    "quarters_80bpm": {
+      "onset_f1": 0.7272727272727273,
+      "onset_pitch_f1": 0.7272727272727273,
+      "onset_pitch_offset_f1": 0.5,
+      "n_gt": 32,
+      "n_est": 56
+    },
+    "shuffle_110bpm": {
+      "onset_f1": 0.6237623762376238,
+      "onset_pitch_f1": 0.6237623762376238,
+      "onset_pitch_offset_f1": 0.297029702970297,
+      "n_gt": 64,
+      "n_est": 138
+    },
+    "sixteenths_100bpm": {
+      "onset_f1": 0.2222222222222222,
+      "onset_pitch_f1": 0.19753086419753085,
+      "onset_pitch_offset_f1": 0.04938271604938271,
+      "n_gt": 64,
+      "n_est": 17
+    },
+    "walkup_95bpm": {
+      "onset_f1": 0.7692307692307693,
+      "onset_pitch_f1": 0.7692307692307693,
+      "onset_pitch_offset_f1": 0.717948717948718,
+      "n_gt": 16,
+      "n_est": 23
+    }
+  }
+}

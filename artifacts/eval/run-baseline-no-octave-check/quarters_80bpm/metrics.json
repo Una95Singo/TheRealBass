@@ -1,0 +1,7 @@
+{
+  "onset_f1": 0.7272727272727273,
+  "onset_pitch_f1": 0.7272727272727273,
+  "onset_pitch_offset_f1": 0.5,
+  "n_gt": 32,
+  "n_est": 56
+}
