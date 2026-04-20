@@ -5,17 +5,21 @@ current pipeline's transcribe_to_midi on it, and score the output against
 the ground truth using mir_eval.transcription.precision_recall_f1_overlap
 (the MIREX onset/pitch/offset scoring routine).
 
-Prints a per-clip + mean F1 table.
+Prints a per-clip + mean F1 table, and (when ``--artifacts-out`` is
+given, default ``<repo>/artifacts/eval/<timestamp>``) writes per-clip
+PNG diff rolls + stereo A/B WAVs + a markdown index for mobile review.
 """
 from __future__ import annotations
 
 import argparse
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 BACKEND_DIR = HERE.parent
+REPO_ROOT = BACKEND_DIR.parent
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
@@ -23,10 +27,12 @@ import numpy as np  # noqa: E402
 import pretty_midi  # noqa: E402
 from mir_eval import transcription  # noqa: E402
 
+from eval.artifacts import write_clip_artifacts, write_run_index  # noqa: E402
 from eval.synth import synthesize_midi_to_wav  # noqa: E402
 from transcribe import transcribe_to_midi  # noqa: E402
 
 CORPUS_DIR = HERE / "corpus"
+DEFAULT_ARTIFACTS_ROOT = REPO_ROOT / "artifacts" / "eval"
 
 
 def midi_to_mir_eval_arrays(midi_path: Path) -> tuple[np.ndarray, np.ndarray]:
@@ -86,6 +92,11 @@ def main() -> int:
     parser.add_argument("--corpus", type=Path, default=CORPUS_DIR)
     parser.add_argument("--only", type=str, default=None,
                         help="Substring match on clip name to evaluate just one.")
+    parser.add_argument("--artifacts-out", type=Path, default=None,
+                        help=("Root directory for per-clip eval artifacts. "
+                              f"Default: {DEFAULT_ARTIFACTS_ROOT}/<timestamp>"))
+    parser.add_argument("--no-artifacts", action="store_true",
+                        help="Skip writing the PNG/WAV/markdown artifact bundle.")
     args = parser.parse_args()
 
     clips = sorted(p for p in args.corpus.glob("*.mid"))
@@ -98,6 +109,13 @@ def main() -> int:
     header = f"{'clip':<24}  {'onset':>7}  {'+pitch':>7}  {'+offset':>7}  {'n_gt':>5}  {'n_est':>5}"
     print(header)
     print("-" * len(header))
+
+    if args.no_artifacts:
+        artifact_root = None
+    else:
+        run_id = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+        artifact_root = (args.artifacts_out or DEFAULT_ARTIFACTS_ROOT) / run_id
+        artifact_root.mkdir(parents=True, exist_ok=True)
 
     rows: list[tuple[str, dict[str, float]]] = []
     with tempfile.TemporaryDirectory(prefix="therealbass-eval-") as tmpdir:
@@ -119,7 +137,20 @@ def main() -> int:
                 f"{metrics['onset_pitch_offset_f1']:>7.3f}  "
                 f"{metrics['n_gt']:>5}  {metrics['n_est']:>5}"
             )
+            if artifact_root is not None:
+                try:
+                    write_clip_artifacts(
+                        clip_name=gt.stem,
+                        audio_path=wav,
+                        gt_midi=gt,
+                        est_midi=est_midi,
+                        metrics=metrics,
+                        out_dir=artifact_root / gt.stem,
+                    )
+                except Exception as exc:  # artifacts are best-effort
+                    print(f"  [artifacts] {gt.stem}: {exc}", file=sys.stderr)
 
+    means: dict[str, float] = {}
     if rows:
         means = {
             key: sum(m[key] for _, m in rows) / len(rows)
@@ -131,6 +162,12 @@ def main() -> int:
             f"{means['onset_pitch_f1']:>7.3f}  "
             f"{means['onset_pitch_offset_f1']:>7.3f}"
         )
+
+    if artifact_root is not None and rows:
+        index_path = write_run_index(run_dir=artifact_root, rows=rows, means=means)
+        print(f"\nartifacts: {index_path.parent}")
+        print(f"open on mobile: {index_path}")
+
     return 0
 
 
