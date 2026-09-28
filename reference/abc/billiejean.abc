@@ -1,0 +1,20 @@
+X:2
+M:4/4
+L:1/4
+Q:1/4=117
+K:F#m clef=bass style=rhythm
+%%barsperstaff 4
+P:A
+"N.C. drums"x4 | x4 | x4 | x4 |
+"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, |
+"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, |
+P:B
+|: "F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, |
+"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "Bm7"D,, D,, D,, D,, | "F#m"D,, D,, D,, D,, :|
+P:C
+"D"D,, D,, D,, D,, | "F#m"D,, D,, D,, D,, | "D"D,, D,, D,, D,, | "F#m"D,, D,, D,, D,, |
+"D"D,, D,, D,, D,, | "F#m"D,, D,, D,, D,, | "D"D,, D,, D,, D,, | "C#7"D,, D,, D,, D,, |
+P:D
+"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, |
+"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "Bm7"D,, D,, D,, D,, | "F#m"D,, D,, D,, D,, |
+"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, | "Bm7"D,, D,, D,, D,, | "F#m"D,, D,, D,, D,, |]

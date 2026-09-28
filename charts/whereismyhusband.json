@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "id": "whereismyhusband",
+  "title": "Where Is My Husband!",
+  "artist": "RAYE",
+  "year": 2025,
+  "key": {
+    "display": "B♭ minor",
+    "abc": "Bbm",
+    "relative": "swing / big band"
+  },
+  "bpm": 116,
+  "time": "4/4",
+  "feel": "Swung 8ths, walking bass — jazz articulation",
+  "form": [
+    {
+      "label": "Intro",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "V1",
+      "bars": 8,
+      "section": "B",
+      "confidence": "l"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "V2",
+      "bars": 8,
+      "section": "B",
+      "confidence": "l"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "Br",
+      "bars": 8,
+      "section": "C",
+      "confidence": "l"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "Tag",
+      "section": "A",
+      "confidence": "l"
+    }
+  ],
+  "sections": [
+    {
+      "letter": "A",
+      "name": "Intro",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Bbm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Db",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Eb",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bbm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Db",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Eb",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "B",
+      "name": "V1",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Bbm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": [
+            {
+              "chord": "Fm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bbm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "C",
+      "name": "Br",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Bbm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Db",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Eb",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Ebm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Fm",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Gb",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "**Walk it.** This is the one chart where quarter-note walking lines fit: Bbm–Db–Eb is a minor-third then whole-step climb; chromatic approach notes into each bar.",
+    "**Verse sits on Bbm** with F / Fm as the turnaround — the V–i pull is the whole tension.",
+    "**Bridge climbs** Ebm → Fm → Gb → F: the Gb→F half-step is the release into the last chorus.",
+    "The record is on a 5-string; low Eb and Db under the chorus if you have it."
+  ],
+  "numbers": "Bbm = i   Db = III   Eb = IV   F / F7 = V\nFm = v   Ebm = iv   Gb = VI",
+  "verify": {
+    "agree": [
+      "Musicnotes",
+      "Klangio",
+      "The Bass Diaries",
+      "Chordify"
+    ],
+    "check": [],
+    "text": "Key and tempo: Musicnotes, Klangio, The Bass Diaries and Chordify agree on Bb minor, 115–116 BPM. Chorus Bbm–Db–Eb(–F) from Chordify's grid; verse and bridge chords from the same grid but **bar counts are estimates** — this arrangement has stops and horn hits, count it with the record."
+  },
+  "sources": [
+    {
+      "name": "Musicnotes",
+      "gives": []
+    },
+    {
+      "name": "Klangio",
+      "gives": []
+    },
+    {
+      "name": "The Bass Diaries",
+      "gives": []
+    },
+    {
+      "name": "Chordify",
+      "gives": []
+    }
+  ]
+}

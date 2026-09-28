@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "id": "hecanonlyholdher",
+  "title": "He Can Only Hold Her",
+  "artist": "Amy Winehouse",
+  "year": 2006,
+  "key": {
+    "display": "D major",
+    "abc": "D",
+    "relative": "lives on Em7 / Bm7"
+  },
+  "bpm": 97,
+  "time": "4/4",
+  "feel": "Motown / doo-wop, straight 8ths, tight",
+  "form": [
+    {
+      "label": "Intro",
+      "bars": 8,
+      "section": "A",
+      "confidence": "h"
+    },
+    {
+      "label": "V1",
+      "bars": 8,
+      "section": "B",
+      "confidence": "h"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "h"
+    },
+    {
+      "label": "Int",
+      "bars": 2,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "V2",
+      "bars": 8,
+      "section": "B",
+      "confidence": "h"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "h"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "Out",
+      "bars": 4,
+      "section": "A",
+      "confidence": "l"
+    }
+  ],
+  "sections": [
+    {
+      "letter": "A",
+      "name": "Intro",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Dmaj7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Dmaj7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "B",
+      "name": "V1",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Dmaj7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Dmaj7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Dmaj7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Dmaj7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em7",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "**Two cells, one bar each chord.** Verse alternates D–Em; chorus/intro adds the Bm on bar 3 (D–Em–Bm–Em). That Bm is the only thing to count.",
+    "**Motown bass:** root–5th–octave with 8th-note pushes into each new chord. Land the E on the downbeat every second bar.",
+    "**Tuning note:** the record sits slightly flat (≈431 Hz) — don't chase it, the band will be at 440."
+  ],
+  "numbers": "Dmaj7 = Imaj7   Em7 = ii7   Bm7 = vi7",
+  "verify": {
+    "agree": [
+      "Chordify",
+      "Guitartuna",
+      "Musicnotes"
+    ],
+    "check": [
+      "the 2-bar interlude and the outro length"
+    ],
+    "text": "Chords: Chordify (studio), Chordify (Porchester Hall live) and Guitartuna agree on D–Em–Bm–Em intro/chorus and D–Em verse; Musicnotes and Chordify give D major, 94–98 BPM. Chordify's grid shows one chord per bar, so counts are solid. **Check:** the 2-bar interlude and the outro length."
+  },
+  "sources": [
+    {
+      "name": "Chordify",
+      "gives": []
+    },
+    {
+      "name": "Guitartuna",
+      "gives": []
+    },
+    {
+      "name": "Musicnotes",
+      "gives": []
+    }
+  ]
+}

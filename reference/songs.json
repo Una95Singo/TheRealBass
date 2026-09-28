@@ -1,0 +1,505 @@
+[
+  {
+    "id": "12to12",
+    "title": "12 to 12",
+    "artist": "sombr",
+    "year": 2025,
+    "key": "D major",
+    "keysig": "D",
+    "rel": "Bm relative",
+    "bpm": 124,
+    "feel": "Indie rock, straight 8ths",
+    "form": [
+      [
+        "Intro 10",
+        "A",
+        "m"
+      ],
+      [
+        "V1 16",
+        "B",
+        "m"
+      ],
+      [
+        "PC 8",
+        "C",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "D",
+        "m"
+      ],
+      [
+        "Int 8",
+        "E",
+        "m"
+      ],
+      [
+        "V2 16",
+        "B",
+        "m"
+      ],
+      [
+        "PC 8",
+        "C",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "D",
+        "m"
+      ],
+      [
+        "Br 8",
+        "F",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "D",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "D",
+        "m"
+      ],
+      [
+        "Out 6",
+        "G",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>Home is E, not D.</b> The D on beat 1 is a pickup into Em — lean on the E.",
+      "<b>Half-step walks are the hooks:</b> F# → G; pre-chorus B → A# → A; bridge E → F♮ → D.",
+      "<b>Groove:</b> straight 8ths on roots, lighter in verses, open in the chorus."
+    ],
+    "numbers": "D = I &nbsp; Em = ii &nbsp; D/F# = I/3 &nbsp; G = IV<br>Bm = vi &nbsp; A = V &nbsp; Bm/A# = vi/♯5<br>E = II &nbsp; F7 = ♭III7 (bridge only)",
+    "verify": "Chords: Ultimate Guitar, Guitartuna and Chordify agree on D–Em–D/F#–G–Bm–A; only Guitartuna gives Bm/A#, A6, Gmaj7. Bar counts come from Chordify's beat grid only. <b>Check:</b> D one beat vs one bar; pre-chorus and bridge lengths.",
+    "abc": "X:1\nM:4/4\nL:1/4\nQ:1/4=124\nK:D clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, | \"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, |\n\"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, | \"D/F#\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, |\n\"Bm\"D,, D,, D,, D,, | \"A\"D,, D,, D,, D,, |\nP:B\n|: \"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, | \"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, |\n\"D/F#\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, | \"Bm\"D,, D,, D,, D,, | \"A\"D,, D,, D,, D,, :|\nP:C\n\"Bm\"D,, D,, D,, D,, | \"Bm/A#\"D,, D,, D,, D,, | \"A\"D,, D,, D,, D,, | \"A6\"D,, D,, D,, D,, |\n\"Em\"D,, D,, D,, D,, | D,, D,, D,, D,, | \"Gmaj7\"D,, D,, D,, D,, | \"A6\"D,, D,, D,, D,, |\nP:D\n\"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, | \"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, |\n\"D/F#\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, | \"Bm\"D,, D,, D,, D,, | \"A\"D,, D,, D,, D,, |\nP:E\n\"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, | \"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, |\n\"D/F#\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, | \"D/F#\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, |\nP:F\n\"Em\"D,, D,, D,, D,, | \"Bm\"D,, D,, \"A\"D,, D,, | \"Em\"D,, D,, D,, D,, | \"Bm\"D,, D,, \"A\"D,, D,, |\n\"Em\"D,, D,, \"E\"D,, D,, | \"G\"D,, D,, \"D\"D,, D,, | \"Em\"D,, D,, \"E\"D,, D,, | \"F7\"D,, D,, \"D\"D,, D,, |\nP:G\n\"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, | \"D\"D,, \"Em\"D,, D,, D,, | D,, D,, D,, D,, |\n\"D/F#\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, |]\n"
+  },
+  {
+    "id": "billiejean",
+    "title": "Billie Jean",
+    "artist": "Michael Jackson",
+    "year": 1982,
+    "key": "F# minor",
+    "keysig": "F#m",
+    "rel": "F# Dorian in the vamp",
+    "bpm": 117,
+    "feel": "Mid-tempo groove — the bass line IS the song",
+    "form": [
+      [
+        "Intro 12",
+        "A",
+        "l"
+      ],
+      [
+        "V1 16",
+        "B",
+        "m"
+      ],
+      [
+        "PC 8",
+        "C",
+        "h"
+      ],
+      [
+        "Ch 12",
+        "D",
+        "l"
+      ],
+      [
+        "Int 4",
+        "A",
+        "m"
+      ],
+      [
+        "V2 16",
+        "B",
+        "m"
+      ],
+      [
+        "PC 8",
+        "C",
+        "h"
+      ],
+      [
+        "Ch 12",
+        "D",
+        "l"
+      ],
+      [
+        "Solo 8",
+        "B",
+        "l"
+      ],
+      [
+        "Ch ×2",
+        "D",
+        "l"
+      ],
+      [
+        "Vamp out",
+        "A",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>The riff is the whole gig:</b> F#–C#–E–F#–E–C#–B–C# in 8ths under the F#m/G#m alternation; same shape from B under Bm7. Play it like a metronome — no fills until the pre-chorus.",
+      "<b>Pre-chorus opens up:</b> D and F#m one bar each, held roots; C#7 sets up the chorus.",
+      "<b>Bar counts are the weak spot here:</b> the vamp is one 2-bar cell repeated, so count phrases against the vocal, not the chords."
+    ],
+    "numbers": "F#m = i &nbsp; G#m/F# = ii/♭7 (pedal) &nbsp; A/E = III/♭3<br>Bm7 = iv7 &nbsp; D = VI &nbsp; C#7 = V7",
+    "verify": "Chords: e-chords and Guitaretab agree on the F#m–G#m/F#–A/E–G#m/F# vamp, Bm7 and D–F#m pre-chorus; Hooktheory confirms F# minor, 117 BPM. <b>Check:</b> the Notion entry says \"(Soul)\" — if the band plays a rearranged version, this chart follows the original record.",
+    "abc": "X:2\nM:4/4\nL:1/4\nQ:1/4=117\nK:F#m clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"N.C. drums\"x4 | x4 | x4 | x4 |\n\"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, |\n\"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, |\nP:B\n|: \"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, |\n\"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"Bm7\"D,, D,, D,, D,, | \"F#m\"D,, D,, D,, D,, :|\nP:C\n\"D\"D,, D,, D,, D,, | \"F#m\"D,, D,, D,, D,, | \"D\"D,, D,, D,, D,, | \"F#m\"D,, D,, D,, D,, |\n\"D\"D,, D,, D,, D,, | \"F#m\"D,, D,, D,, D,, | \"D\"D,, D,, D,, D,, | \"C#7\"D,, D,, D,, D,, |\nP:D\n\"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, |\n\"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"Bm7\"D,, D,, D,, D,, | \"F#m\"D,, D,, D,, D,, |\n\"F#m\"D,, \"G#m/F#\"D,, D,, D,, | \"A/E\"D,, \"G#m/F#\"D,, D,, D,, | \"Bm7\"D,, D,, D,, D,, | \"F#m\"D,, D,, D,, D,, |]\n"
+  },
+  {
+    "id": "holdon",
+    "title": "Hold On",
+    "artist": "Alabama Shakes",
+    "year": 2012,
+    "key": "C major",
+    "keysig": "C",
+    "rel": "blues-inflected",
+    "bpm": 88,
+    "feel": "Southern soul, laid back, behind the beat",
+    "form": [
+      [
+        "Intro 8",
+        "A",
+        "m"
+      ],
+      [
+        "V1 8",
+        "B",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "C",
+        "h"
+      ],
+      [
+        "V2 8",
+        "B",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "C",
+        "h"
+      ],
+      [
+        "Br 8",
+        "D",
+        "m"
+      ],
+      [
+        "V3 8",
+        "B",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "C",
+        "h"
+      ],
+      [
+        "Br 8",
+        "D",
+        "m"
+      ],
+      [
+        "Out 8",
+        "E",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>Two chords, one groove.</b> Verses sit on C with the signature pickup riff into each bar; F answers on the \"hold on\" hits in the chorus.",
+      "<b>Space is the part:</b> at 88 leave air after beat 1. The bridge (\"you got to wait\") is the same C–F cell, dynamics down.",
+      "<b>Chorus F placement</b> is half-bar here per Guitartuna; Chordify hears F only every 4th bar — listen for which."
+    ],
+    "numbers": "C = I &nbsp; F = IV &nbsp; (that's it)",
+    "verify": "Chords: Chordify, Guitartuna and ChordU all say C and F only, C major, 88–91 BPM. Section order from Guitartuna; bar counts assume 8-bar sections. <b>Check:</b> intro length and where the F lands in the chorus.",
+    "abc": "X:3\nM:4/4\nL:1/4\nQ:1/4=88\nK:C clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"C\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, |\n\"F\"D,, D,, D,, D,, | \"C\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, |\nP:B\n\"C\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, |\n\"C\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, |\nP:C\n\"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, |\n\"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, |\nP:D\n\"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, |\n\"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, |\nP:E\n\"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, |\n\"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, \"F\"D,, D,, | \"C\"D,, D,, D,, D,, |]\n"
+  },
+  {
+    "id": "sinceubeengone",
+    "title": "Since U Been Gone",
+    "artist": "Kelly Clarkson",
+    "year": 2004,
+    "key": "G major",
+    "keysig": "G",
+    "rel": "Mixolydian verse (F♮)",
+    "bpm": 131,
+    "feel": "Pop-punk, driving 8ths, big chorus",
+    "form": [
+      [
+        "Intro 4",
+        "A",
+        "m"
+      ],
+      [
+        "V1 16",
+        "B",
+        "m"
+      ],
+      [
+        "PC 8",
+        "C",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "D",
+        "h"
+      ],
+      [
+        "V2 8",
+        "B",
+        "m"
+      ],
+      [
+        "PC 8",
+        "C",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "D",
+        "h"
+      ],
+      [
+        "Br 8",
+        "E",
+        "m"
+      ],
+      [
+        "Inst 8",
+        "F",
+        "m"
+      ],
+      [
+        "Ch ×2",
+        "D",
+        "h"
+      ],
+      [
+        "Tag 4",
+        "A",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>Verse F♮</b> is the Mixolydian colour — play F, not F#. Root 8ths, slightly muted.",
+      "<b>Chorus</b> is where the bass drives: Bm–C–G with the C landing on beat 3. Open it right up.",
+      "<b>Bridge:</b> C–Em–C–G, half-time feel in the drums; keep 8ths steady underneath, build into the instrumental."
+    ],
+    "numbers": "G = I &nbsp; Am = ii &nbsp; Em = vi &nbsp; F = ♭VII (verse)<br>Bm = iii &nbsp; C = IV &nbsp; D = V",
+    "verify": "Chords: Songsterr, Chords Easy and Khmerchords agree on verse G–Am–Em–F, chorus Bm–C–G / Em–C–G / Am–Em–D–Am, bridge C–Em–C–G; Hooktheory and Klangio give G major, 130–131 BPM. Bar counts inferred from lyric phrasing. <b>Check:</b> pre-chorus length and the chorus turnaround (D–Am).",
+    "abc": "X:4\nM:4/4\nL:1/4\nQ:1/4=131\nK:G clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"G\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, |\nP:B\n|: \"G\"D,, D,, D,, D,, | \"Am\"D,, D,, D,, D,, | \"Em\"D,, D,, D,, D,, | \"F\"D,, D,, D,, D,, |\n\"G\"D,, D,, D,, D,, | \"Am\"D,, D,, D,, D,, | \"Em\"D,, D,, D,, D,, | \"F\"D,, D,, D,, D,, :|\nP:C\n\"F\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, | \"Am\"D,, D,, D,, D,, | \"Em\"D,, D,, D,, D,, |\n\"F\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, | D,, D,, D,, D,, |\nP:D\n\"Bm\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, | \"Bm\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, |\n\"Em\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, | \"Am\"D,, D,, \"Em\"D,, D,, | \"D\"D,, D,, \"Am\"D,, D,, |\nP:E\n\"C\"D,, D,, D,, D,, | \"Em\"D,, D,, D,, D,, | \"C\"D,, D,, D,, D,, | \"G\"D,, D,, D,, D,, |\n\"C\"D,, D,, D,, D,, | \"Em\"D,, D,, D,, D,, | \"C\"D,, D,, D,, D,, | D,, D,, D,, D,, |\nP:F\n\"Bm\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, | \"Bm\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, |\n\"Em\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, | \"Em\"D,, D,, \"C\"D,, D,, | \"G\"D,, D,, D,, D,, |]\n"
+  },
+  {
+    "id": "maniineed",
+    "title": "Man I Need",
+    "artist": "Olivia Dean",
+    "year": 2025,
+    "key": "D♭ major",
+    "keysig": "Db",
+    "rel": "one flat lower than D — check the band's key",
+    "bpm": 120,
+    "feel": "Neo-soul pop, bouncy, behind the beat",
+    "form": [
+      [
+        "Intro 4",
+        "A",
+        "m"
+      ],
+      [
+        "V1 8",
+        "A",
+        "m"
+      ],
+      [
+        "PC 4",
+        "B",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "C",
+        "m"
+      ],
+      [
+        "V2 8",
+        "A",
+        "m"
+      ],
+      [
+        "PC 4",
+        "B",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "C",
+        "m"
+      ],
+      [
+        "Br 8",
+        "D",
+        "l"
+      ],
+      [
+        "Ch ×2",
+        "C",
+        "m"
+      ],
+      [
+        "Out 4",
+        "A",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>Db/F is the whole verse:</b> play F, not Db — the F→Gb half-step on beat 4 is the hook. The Gb comes late in the bar; listen for exactly where.",
+      "<b>Chorus bass walks:</b> Bb → Db → C → Gb. The Ab/C means C under the Ab chord — a chromatic step down from Db.",
+      "<b>Feel:</b> lazy 16th-note pocket. Rests are part of the line."
+    ],
+    "numbers": "Db = I &nbsp; Db/F = I/3 &nbsp; Gb = IV &nbsp; Bbm = vi<br>Ab/C = V/3 &nbsp; Ab = V",
+    "verify": "Chords and key: Chordify, Tunebat, Mixgraph and Musicnotes agree on Db major, 119–120 BPM, Db/F–Gb verse, Bbm–Db–Ab/C–Gb chorus. Form and bar counts are inferred from Chordify's grid and the 3:04 length — <b>pre-chorus and bridge are guesses</b>. Check whether the band plays it in Db or D.",
+    "abc": "X:5\nM:4/4\nL:1/4\nQ:1/4=120\nK:Db clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"Db/F\"D,, D,, D,, \"Gb\"D,, | D,, D,, D,, D,, | \"Db/F\"D,, D,, D,, \"Gb\"D,, | D,, D,, D,, D,, |\n\"Db/F\"D,, D,, D,, \"Gb\"D,, | D,, D,, D,, D,, | \"Db/F\"D,, D,, D,, \"Gb\"D,, | D,, D,, D,, D,, |\nP:B\n\"Db/F\"D,, D,, D,, \"Gb\"D,, | D,, D,, D,, D,, | \"Db/F\"D,, D,, D,, \"Gb\"D,, | D,, D,, D,, D,, |\nP:C\n\"Bbm\"D,, D,, D,, D,, | \"Db\"D,, D,, \"Ab/C\"D,, D,, | \"Gb\"D,, D,, D,, D,, | D,, D,, D,, D,, |\n\"Bbm\"D,, D,, D,, D,, | \"Db\"D,, D,, \"Ab/C\"D,, D,, | \"Gb\"D,, D,, D,, D,, | D,, D,, D,, D,, |\nP:D\n\"Bbm\"D,, D,, D,, D,, | D,, D,, D,, D,, | \"Gb\"D,, D,, D,, D,, | D,, D,, D,, D,, |\n\"Bbm\"D,, D,, D,, D,, | D,, D,, D,, D,, | \"Gb\"D,, D,, D,, D,, | \"Ab\"D,, D,, D,, D,, |]\n"
+  },
+  {
+    "id": "hecanonlyholdher",
+    "title": "He Can Only Hold Her",
+    "artist": "Amy Winehouse",
+    "year": 2006,
+    "key": "D major",
+    "keysig": "D",
+    "rel": "lives on Em7 / Bm7",
+    "bpm": 97,
+    "feel": "Motown / doo-wop, straight 8ths, tight",
+    "form": [
+      [
+        "Intro 8",
+        "A",
+        "h"
+      ],
+      [
+        "V1 8",
+        "B",
+        "h"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "h"
+      ],
+      [
+        "Int 2",
+        "B",
+        "m"
+      ],
+      [
+        "V2 8",
+        "B",
+        "h"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "h"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "m"
+      ],
+      [
+        "Out 4",
+        "A",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>Two cells, one bar each chord.</b> Verse alternates D–Em; chorus/intro adds the Bm on bar 3 (D–Em–Bm–Em). That Bm is the only thing to count.",
+      "<b>Motown bass:</b> root–5th–octave with 8th-note pushes into each new chord. Land the E on the downbeat every second bar.",
+      "<b>Tuning note:</b> the record sits slightly flat (≈431 Hz) — don't chase it, the band will be at 440."
+    ],
+    "numbers": "Dmaj7 = Imaj7 &nbsp; Em7 = ii7 &nbsp; Bm7 = vi7",
+    "verify": "Chords: Chordify (studio), Chordify (Porchester Hall live) and Guitartuna agree on D–Em–Bm–Em intro/chorus and D–Em verse; Musicnotes and Chordify give D major, 94–98 BPM. Chordify's grid shows one chord per bar, so counts are solid. <b>Check:</b> the 2-bar interlude and the outro length.",
+    "abc": "X:6\nM:4/4\nL:1/4\nQ:1/4=97\nK:D clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"Dmaj7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, | \"Bm7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, |\n\"Dmaj7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, | \"Bm7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, |\nP:B\n\"Dmaj7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, | \"Dmaj7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, |\n\"Dmaj7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, | \"Dmaj7\"D,, D,, D,, D,, | \"Em7\"D,, D,, D,, D,, |]\n"
+  },
+  {
+    "id": "whereismyhusband",
+    "title": "Where Is My Husband!",
+    "artist": "RAYE",
+    "year": 2025,
+    "key": "B♭ minor",
+    "keysig": "Bbm",
+    "rel": "swing / big band",
+    "bpm": 116,
+    "feel": "Swung 8ths, walking bass — jazz articulation",
+    "form": [
+      [
+        "Intro 8",
+        "A",
+        "m"
+      ],
+      [
+        "V1 8",
+        "B",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "m"
+      ],
+      [
+        "V2 8",
+        "B",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "m"
+      ],
+      [
+        "Br 8",
+        "C",
+        "l"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "m"
+      ],
+      [
+        "Ch 8",
+        "A",
+        "m"
+      ],
+      [
+        "Tag",
+        "A",
+        "l"
+      ]
+    ],
+    "notes": [
+      "<b>Walk it.</b> This is the one chart where quarter-note walking lines fit: Bbm–Db–Eb is a minor-third then whole-step climb; chromatic approach notes into each bar.",
+      "<b>Verse sits on Bbm</b> with F / Fm as the turnaround — the V–i pull is the whole tension.",
+      "<b>Bridge climbs</b> Ebm → Fm → Gb → F: the Gb→F half-step is the release into the last chorus.",
+      "The record is on a 5-string; low Eb and Db under the chorus if you have it."
+    ],
+    "numbers": "Bbm = i &nbsp; Db = III &nbsp; Eb = IV &nbsp; F / F7 = V<br>Fm = v &nbsp; Ebm = iv &nbsp; Gb = VI",
+    "verify": "Key and tempo: Musicnotes, Klangio, The Bass Diaries and Chordify agree on Bb minor, 115–116 BPM. Chorus Bbm–Db–Eb(–F) from Chordify's grid; verse and bridge chords from the same grid but <b>bar counts are estimates</b> — this arrangement has stops and horn hits, count it with the record.",
+    "abc": "X:7\nM:4/4\nL:1/4\nQ:1/4=116\nK:Bbm clef=bass style=rhythm\n%%barsperstaff 4\nP:A\n\"Bbm\"D,, D,, D,, D,, | \"Db\"D,, D,, D,, D,, | \"Eb\"D,, D,, D,, D,, | D,, D,, D,, D,, |\n\"Bbm\"D,, D,, D,, D,, | \"Db\"D,, D,, D,, D,, | \"Eb\"D,, D,, D,, D,, | \"F\"D,, D,, D,, D,, |\nP:B\n\"Bbm\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, | \"Fm\"D,, D,, D,, D,, |\n\"Bbm\"D,, D,, D,, D,, | D,, D,, D,, D,, | D,, D,, D,, D,, | \"F\"D,, D,, D,, D,, |\nP:C\n\"Bbm\"D,, D,, D,, D,, | \"F7\"D,, D,, D,, D,, | \"Db\"D,, D,, D,, D,, | \"Eb\"D,, D,, D,, D,, |\n\"Ebm\"D,, D,, D,, D,, | \"Fm\"D,, D,, D,, D,, | \"Gb\"D,, D,, D,, D,, | \"F\"D,, D,, D,, D,, |]\n"
+  }
+]

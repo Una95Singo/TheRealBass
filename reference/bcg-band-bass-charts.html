@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BCG Band — bass charts</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/abcjs/6.4.4/abcjs-basic-min.js"></script>
+<style>
+:root{--desk:#e9e6df;--paper:#fffdf7;--ink:#111008;--ink-soft:#4a4740;--rule:#1a1812;--box:#f2efe6;--warn:#8a5a00;
+  --hand:"Architects Daughter","Comic Sans MS",cursive;--sans:"Nunito Sans","Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--desk:#23221f}}
+:root[data-theme="dark"]{--desk:#23221f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:inherit}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:var(--sans);font-size:12.5px;line-height:1.35}
+.sheet{background:var(--paper);max-width:8.5in;margin:16px auto;padding:.45in .5in .4in;box-shadow:0 2px 14px rgba(0,0,0,.18);break-after:page}
+@media (max-width:640px){.sheet{margin:0 0 10px;padding:.3in .2in;box-shadow:none}}
+.index{font-family:var(--hand)}
+.index h1{font-size:34px;margin:0 0 6px}
+.index ol{margin:0;padding-left:26px;font-size:17px;line-height:1.7;columns:2}
+.index li a{color:inherit;text-decoration:none}
+.index .legend{font-family:var(--sans);font-size:12px;color:var(--ink-soft);margin-top:14px;border-top:1px solid var(--rule);padding-top:8px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid var(--rule);padding-bottom:5px;gap:12px}
+.title{font-family:var(--hand);font-size:34px;line-height:1;margin:0}
+.artist{font-family:var(--hand);font-size:15px;margin:3px 0 0;color:var(--ink-soft)}
+.meta{font-family:var(--hand);font-size:13px;text-align:right;line-height:1.35;white-space:nowrap}
+.meta b{font-size:17px}
+.form{font-family:var(--hand);font-size:13.5px;margin:7px 0 2px;display:flex;flex-wrap:wrap;gap:3px 0;align-items:baseline}
+.form .arrow{margin:0 5px;color:#8d887c}
+.form sub{font-family:var(--sans);font-size:9.5px;color:var(--ink-soft);margin-left:2px}
+.form .c{font-size:9px;margin-left:1px;vertical-align:super}
+.staff{overflow-x:auto}
+.staff svg{max-width:100%;height:auto}
+.notes{margin-top:6px;border-top:2.5px solid var(--rule);padding-top:7px;display:grid;grid-template-columns:1.3fr 1fr;gap:6px 20px}
+@media (max-width:640px){.notes{grid-template-columns:1fr}}
+.notes h3{font-family:var(--hand);font-size:14px;margin:0 0 3px}
+.notes ul{margin:0;padding-left:15px}
+.notes li{margin:0 0 2px}
+.numbers{background:var(--box);padding:6px 10px;font-family:var(--hand);font-size:12.5px;line-height:1.5}
+.verify{font-size:10.5px;color:var(--ink-soft);margin-top:7px;border-top:1px dashed #8d887c;padding-top:5px}
+.verify b{color:var(--warn)}
+@page{size:letter;margin:.35in}
+@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;padding:0;max-width:none}}
+</style>
+</head>
+<body>
+<main class="sheet index">
+  <h1>BCG Band — bass charts</h1>
+  <ol id="toc"></ol>
+  <div class="legend">Confidence marks on bar counts, from cross-checking chord sites: ● three sources agree &nbsp; ◐ two agree or one gives timing &nbsp; ○ estimate — count it against the record.</div>
+</main>
+<div id="book"></div>
+
+<script>
+const S="D,, D,, D,, D,, |";                 // one bar of slashes
+const H=(a,b)=>`"${a}"D,, D,, "${b}"D,, D,, |`;  // two chords, half bar each
+const bar=(c,n=1)=>Array.from({length:n},(_,i)=>(i?"":`"${c}"`)+S).join(" ");
+const marks={h:"●",m:"◐",l:"○"};
+
+const songs=[
+{ id:"12to12", title:"12 to 12", artist:"sombr", year:2025, key:"D major", keysig:"D", rel:"Bm relative", bpm:124, feel:"Indie rock, straight 8ths",
+  form:[["Intro 10","A","m"],["V1 16","B","m"],["PC 8","C","l"],["Ch 8","D","m"],["Int 8","E","m"],["V2 16","B","m"],["PC 8","C","l"],["Ch 8","D","m"],["Br 8","F","l"],["Ch 8","D","m"],["Ch 8","D","m"],["Out 6","G","l"]],
+  abc:(()=>{const DEm=`"D"D,, "Em"D,, D,, D,, | ${S}`;const FG=`${bar("D/F#")} ${bar("G")}`;const BmA=`${bar("Bm")} ${bar("A")}`;return `
+P:A
+${DEm} ${DEm}
+${DEm} ${FG}
+${BmA}
+P:B
+|: ${DEm} ${DEm}
+${FG} ${bar("Bm")} "A"D,, D,, D,, D,, :|
+P:C
+${bar("Bm")} ${bar("Bm/A#")} ${bar("A")} ${bar("A6")}
+${bar("Em",2)} ${bar("Gmaj7")} ${bar("A6")}
+P:D
+${DEm} ${DEm}
+${FG} ${BmA}
+P:E
+${DEm} ${DEm}
+${FG} ${FG}
+P:F
+${bar("Em")} ${H("Bm","A")} ${bar("Em")} ${H("Bm","A")}
+${H("Em","E")} ${H("G","D")} ${H("Em","E")} ${H("F7","D")}
+P:G
+${DEm} ${DEm}
+${bar("D/F#")} "G"D,, D,, D,, D,, |]`})(),
+  notes:["<b>Home is E, not D.</b> The D on beat 1 is a pickup into Em — lean on the E.","<b>Half-step walks are the hooks:</b> F# → G; pre-chorus B → A# → A; bridge E → F♮ → D.","<b>Groove:</b> straight 8ths on roots, lighter in verses, open in the chorus."],
+  numbers:"D = I &nbsp; Em = ii &nbsp; D/F# = I/3 &nbsp; G = IV<br>Bm = vi &nbsp; A = V &nbsp; Bm/A# = vi/♯5<br>E = II &nbsp; F7 = ♭III7 (bridge only)",
+  verify:"Chords: Ultimate Guitar, Guitartuna and Chordify agree on D–Em–D/F#–G–Bm–A; only Guitartuna gives Bm/A#, A6, Gmaj7. Bar counts come from Chordify's beat grid only. <b>Check:</b> D one beat vs one bar; pre-chorus and bridge lengths."
+},
+{ id:"billiejean", title:"Billie Jean", artist:"Michael Jackson", year:1982, key:"F# minor", keysig:"F#m", rel:"F# Dorian in the vamp", bpm:117, feel:"Mid-tempo groove — the bass line IS the song",
+  form:[["Intro 12","A","l"],["V1 16","B","m"],["PC 8","C","h"],["Ch 12","D","l"],["Int 4","A","m"],["V2 16","B","m"],["PC 8","C","h"],["Ch 12","D","l"],["Solo 8","B","l"],["Ch ×2","D","l"],["Vamp out","A","l"]],
+  abc:(()=>{const V=`"F#m"D,, "G#m/F#"D,, D,, D,, | "A/E"D,, "G#m/F#"D,, D,, D,, |`;return `
+P:A
+"N.C. drums"x4 | x4 | x4 | x4 |
+${V} ${V}
+${V} ${V}
+P:B
+|: ${V} ${V}
+${V} ${bar("Bm7")} "F#m"D,, D,, D,, D,, :|
+P:C
+${bar("D")} ${bar("F#m")} ${bar("D")} ${bar("F#m")}
+${bar("D")} ${bar("F#m")} ${bar("D")} ${bar("C#7")}
+P:D
+${V} ${V}
+${V} ${bar("Bm7")} "F#m"D,, D,, D,, D,, |
+${V} ${bar("Bm7")} "F#m"D,, D,, D,, D,, |]`})(),
+  notes:["<b>The riff is the whole gig:</b> F#–C#–E–F#–E–C#–B–C# in 8ths under the F#m/G#m alternation; same shape from B under Bm7. Play it like a metronome — no fills until the pre-chorus.","<b>Pre-chorus opens up:</b> D and F#m one bar each, held roots; C#7 sets up the chorus.","<b>Bar counts are the weak spot here:</b> the vamp is one 2-bar cell repeated, so count phrases against the vocal, not the chords."],
+  numbers:"F#m = i &nbsp; G#m/F# = ii/♭7 (pedal) &nbsp; A/E = III/♭3<br>Bm7 = iv7 &nbsp; D = VI &nbsp; C#7 = V7",
+  verify:"Chords: e-chords and Guitaretab agree on the F#m–G#m/F#–A/E–G#m/F# vamp, Bm7 and D–F#m pre-chorus; Hooktheory confirms F# minor, 117 BPM. <b>Check:</b> the Notion entry says \"(Soul)\" — if the band plays a rearranged version, this chart follows the original record."
+},
+{ id:"holdon", title:"Hold On", artist:"Alabama Shakes", year:2012, key:"C major", keysig:"C", rel:"blues-inflected", bpm:88, feel:"Southern soul, laid back, behind the beat",
+  form:[["Intro 8","A","m"],["V1 8","B","m"],["Ch 8","C","h"],["V2 8","B","m"],["Ch 8","C","h"],["Br 8","D","m"],["V3 8","B","m"],["Ch 8","C","h"],["Br 8","D","m"],["Out 8","E","l"]],
+  abc:`
+P:A
+${bar("C",4)}
+"F"D,, D,, D,, D,, | ${bar("C",3)}
+P:B
+${bar("C",4)}
+${bar("C",4)}
+P:C
+${H("C","F")} ${H("C","F")} ${H("C","F")} ${H("C","F")}
+${H("C","F")} ${H("C","F")} ${H("C","F")} ${H("C","F")}
+P:D
+${H("C","F")} ${H("C","F")} ${H("C","F")} ${H("C","F")}
+${H("C","F")} ${H("C","F")} ${H("C","F")} ${H("C","F")}
+P:E
+${H("C","F")} ${H("C","F")} ${H("C","F")} ${H("C","F")}
+${H("C","F")} ${H("C","F")} ${H("C","F")} "C"D,, D,, D,, D,, |]`,
+  notes:["<b>Two chords, one groove.</b> Verses sit on C with the signature pickup riff into each bar; F answers on the \"hold on\" hits in the chorus.","<b>Space is the part:</b> at 88 leave air after beat 1. The bridge (\"you got to wait\") is the same C–F cell, dynamics down.","<b>Chorus F placement</b> is half-bar here per Guitartuna; Chordify hears F only every 4th bar — listen for which."],
+  numbers:"C = I &nbsp; F = IV &nbsp; (that's it)",
+  verify:"Chords: Chordify, Guitartuna and ChordU all say C and F only, C major, 88–91 BPM. Section order from Guitartuna; bar counts assume 8-bar sections. <b>Check:</b> intro length and where the F lands in the chorus."
+},
+{ id:"sinceubeengone", title:"Since U Been Gone", artist:"Kelly Clarkson", year:2004, key:"G major", keysig:"G", rel:"Mixolydian verse (F♮)", bpm:131, feel:"Pop-punk, driving 8ths, big chorus",
+  form:[["Intro 4","A","m"],["V1 16","B","m"],["PC 8","C","m"],["Ch 8","D","h"],["V2 8","B","m"],["PC 8","C","m"],["Ch 8","D","h"],["Br 8","E","m"],["Inst 8","F","m"],["Ch ×2","D","h"],["Tag 4","A","l"]],
+  abc:`
+P:A
+${bar("G",4)}
+P:B
+|: ${bar("G")} ${bar("Am")} ${bar("Em")} ${bar("F")}
+${bar("G")} ${bar("Am")} ${bar("Em")} "F"D,, D,, D,, D,, :|
+P:C
+${bar("F")} ${bar("G")} ${bar("Am")} ${bar("Em")}
+${bar("F")} ${bar("G")} ${bar("G",2)}
+P:D
+${H("Bm","C")} ${bar("G")} ${H("Bm","C")} ${bar("G")}
+${H("Em","C")} ${bar("G")} ${H("Am","Em")} ${H("D","Am")}
+P:E
+${bar("C")} ${bar("Em")} ${bar("C")} ${bar("G")}
+${bar("C")} ${bar("Em")} ${bar("C",2)}
+P:F
+${H("Bm","C")} ${bar("G")} ${H("Bm","C")} ${bar("G")}
+${H("Em","C")} ${bar("G")} ${H("Em","C")} "G"D,, D,, D,, D,, |]`,
+  notes:["<b>Verse F♮</b> is the Mixolydian colour — play F, not F#. Root 8ths, slightly muted.","<b>Chorus</b> is where the bass drives: Bm–C–G with the C landing on beat 3. Open it right up.","<b>Bridge:</b> C–Em–C–G, half-time feel in the drums; keep 8ths steady underneath, build into the instrumental."],
+  numbers:"G = I &nbsp; Am = ii &nbsp; Em = vi &nbsp; F = ♭VII (verse)<br>Bm = iii &nbsp; C = IV &nbsp; D = V",
+  verify:"Chords: Songsterr, Chords Easy and Khmerchords agree on verse G–Am–Em–F, chorus Bm–C–G / Em–C–G / Am–Em–D–Am, bridge C–Em–C–G; Hooktheory and Klangio give G major, 130–131 BPM. Bar counts inferred from lyric phrasing. <b>Check:</b> pre-chorus length and the chorus turnaround (D–Am)."
+},
+{ id:"maniineed", title:"Man I Need", artist:"Olivia Dean", year:2025, key:"D♭ major", keysig:"Db", rel:"one flat lower than D — check the band's key", bpm:120, feel:"Neo-soul pop, bouncy, behind the beat",
+  form:[["Intro 4","A","m"],["V1 8","A","m"],["PC 4","B","l"],["Ch 8","C","m"],["V2 8","A","m"],["PC 4","B","l"],["Ch 8","C","m"],["Br 8","D","l"],["Ch ×2","C","m"],["Out 4","A","l"]],
+  abc:(()=>{const V=`"Db/F"D,, D,, D,, "Gb"D,, | ${S}`;return `
+P:A
+${V} ${V}
+${V} ${V}
+P:B
+${V} ${V}
+P:C
+${bar("Bbm")} ${H("Db","Ab/C")} ${bar("Gb",2)}
+${bar("Bbm")} ${H("Db","Ab/C")} ${bar("Gb",2)}
+P:D
+${bar("Bbm",2)} ${bar("Gb",2)}
+${bar("Bbm",2)} ${bar("Gb")} "Ab"D,, D,, D,, D,, |]`})(),
+  notes:["<b>Db/F is the whole verse:</b> play F, not Db — the F→Gb half-step on beat 4 is the hook. The Gb comes late in the bar; listen for exactly where.","<b>Chorus bass walks:</b> Bb → Db → C → Gb. The Ab/C means C under the Ab chord — a chromatic step down from Db.","<b>Feel:</b> lazy 16th-note pocket. Rests are part of the line."],
+  numbers:"Db = I &nbsp; Db/F = I/3 &nbsp; Gb = IV &nbsp; Bbm = vi<br>Ab/C = V/3 &nbsp; Ab = V",
+  verify:"Chords and key: Chordify, Tunebat, Mixgraph and Musicnotes agree on Db major, 119–120 BPM, Db/F–Gb verse, Bbm–Db–Ab/C–Gb chorus. Form and bar counts are inferred from Chordify's grid and the 3:04 length — <b>pre-chorus and bridge are guesses</b>. Check whether the band plays it in Db or D."
+},
+{ id:"hecanonlyholdher", title:"He Can Only Hold Her", artist:"Amy Winehouse", year:2006, key:"D major", keysig:"D", rel:"lives on Em7 / Bm7", bpm:97, feel:"Motown / doo-wop, straight 8ths, tight",
+  form:[["Intro 8","A","h"],["V1 8","B","h"],["Ch 8","A","h"],["Int 2","B","m"],["V2 8","B","h"],["Ch 8","A","h"],["Ch 8","A","m"],["Out 4","A","l"]],
+  abc:`
+P:A
+${bar("Dmaj7")} ${bar("Em7")} ${bar("Bm7")} ${bar("Em7")}
+${bar("Dmaj7")} ${bar("Em7")} ${bar("Bm7")} ${bar("Em7")}
+P:B
+${bar("Dmaj7")} ${bar("Em7")} ${bar("Dmaj7")} ${bar("Em7")}
+${bar("Dmaj7")} ${bar("Em7")} ${bar("Dmaj7")} "Em7"D,, D,, D,, D,, |]`,
+  notes:["<b>Two cells, one bar each chord.</b> Verse alternates D–Em; chorus/intro adds the Bm on bar 3 (D–Em–Bm–Em). That Bm is the only thing to count.","<b>Motown bass:</b> root–5th–octave with 8th-note pushes into each new chord. Land the E on the downbeat every second bar.","<b>Tuning note:</b> the record sits slightly flat (≈431 Hz) — don't chase it, the band will be at 440."],
+  numbers:"Dmaj7 = Imaj7 &nbsp; Em7 = ii7 &nbsp; Bm7 = vi7",
+  verify:"Chords: Chordify (studio), Chordify (Porchester Hall live) and Guitartuna agree on D–Em–Bm–Em intro/chorus and D–Em verse; Musicnotes and Chordify give D major, 94–98 BPM. Chordify's grid shows one chord per bar, so counts are solid. <b>Check:</b> the 2-bar interlude and the outro length."
+},
+{ id:"whereismyhusband", title:"Where Is My Husband!", artist:"RAYE", year:2025, key:"B♭ minor", keysig:"Bbm", rel:"swing / big band", bpm:116, feel:"Swung 8ths, walking bass — jazz articulation",
+  form:[["Intro 8","A","m"],["V1 8","B","l"],["Ch 8","A","m"],["V2 8","B","l"],["Ch 8","A","m"],["Br 8","C","l"],["Ch 8","A","m"],["Ch 8","A","m"],["Tag","A","l"]],
+  abc:`
+P:A
+${bar("Bbm")} ${bar("Db")} ${bar("Eb",2)}
+${bar("Bbm")} ${bar("Db")} ${bar("Eb")} ${bar("F")}
+P:B
+${bar("Bbm",3)} ${bar("Fm")}
+${bar("Bbm",3)} ${bar("F")}
+P:C
+${bar("Bbm")} ${bar("F7")} ${bar("Db")} ${bar("Eb")}
+${bar("Ebm")} ${bar("Fm")} ${bar("Gb")} "F"D,, D,, D,, D,, |]`,
+  notes:["<b>Walk it.</b> This is the one chart where quarter-note walking lines fit: Bbm–Db–Eb is a minor-third then whole-step climb; chromatic approach notes into each bar.","<b>Verse sits on Bbm</b> with F / Fm as the turnaround — the V–i pull is the whole tension.","<b>Bridge climbs</b> Ebm → Fm → Gb → F: the Gb→F half-step is the release into the last chorus.","The record is on a 5-string; low Eb and Db under the chorus if you have it."],
+  numbers:"Bbm = i &nbsp; Db = III &nbsp; Eb = IV &nbsp; F / F7 = V<br>Fm = v &nbsp; Ebm = iv &nbsp; Gb = VI",
+  verify:"Key and tempo: Musicnotes, Klangio, The Bass Diaries and Chordify agree on Bb minor, 115–116 BPM. Chorus Bbm–Db–Eb(–F) from Chordify's grid; verse and bridge chords from the same grid but <b>bar counts are estimates</b> — this arrangement has stops and horn hits, count it with the record."
+}];
+
+const toc=document.getElementById("toc");
+const book=document.getElementById("book");
+songs.forEach((s,i)=>{
+  toc.insertAdjacentHTML("beforeend",`<li><a href="#${s.id}">${s.title}</a> <sub style="font-family:var(--sans);font-size:10px;color:var(--ink-soft)">${s.artist}</sub></li>`);
+  book.insertAdjacentHTML("beforeend",`
+  <main class="sheet" id="${s.id}">
+    <header class="head">
+      <div><h1 class="title">${s.title}</h1><p class="artist">${s.artist} &nbsp;·&nbsp; ${s.year} &nbsp;·&nbsp; bass</p></div>
+      <div class="meta"><b>${s.key}</b> (${s.rel})<br>♩ = ${s.bpm} &nbsp; 4/4<br>${s.feel}</div>
+    </header>
+    <div class="form">${s.form.map(([n,l,c],j)=>`<span>${n}<sub>${l}</sub><span class="c">${marks[c]}</span></span>${j<s.form.length-1?'<span class="arrow">›</span>':''}`).join("")}</div>
+    <div class="staff" id="staff-${s.id}"></div>
+    <section class="notes">
+      <div><h3>Bass notes</h3><ul>${s.notes.map(n=>`<li>${n}</li>`).join("")}</ul></div>
+      <div><h3>In numbers (key of ${s.keysig.replace("m"," minor")})</h3><div class="numbers">${s.numbers}</div></div>
+    </section>
+    <p class="verify">${s.verify}</p>
+  </main>`);
+  const abc=`X:${i+1}\nM:4/4\nL:1/4\nQ:1/4=${s.bpm}\nK:${s.keysig} clef=bass style=rhythm\n%%barsperstaff 4\n${s.abc.trim()}\n`;
+  ABCJS.renderAbc(`staff-${s.id}`,abc,{responsive:"resize",scale:0.78,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0,
+    format:{partsfont:"Architects Daughter 13 box",gchordfont:"Architects Daughter 13"}});
+});
+</script>
+</body>
+</html>
