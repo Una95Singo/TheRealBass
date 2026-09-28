@@ -31,6 +31,12 @@ thesis (PLAN.md §1) is a question for Una, not an entry here.
   the content column is 7.5in in both and the fit check can measure the
   on-screen sheet: it fits if the box is ≤ 11in tall. The parity test also
   prints each chart to PDF and asserts the page count.
+- **Fit is decided on the screen the chart is viewed on.** Below 640px the
+  sheet reflows to the phone's width (as the reference page does) and the
+  staff scales down, so on a phone every chart "fits" at 4 bars per line and
+  reads like a scrolled page. That is the right result for reading on a phone;
+  it is not a print preview. Print from a desktop browser, where the on-screen
+  geometry is the printed geometry.
 - **Parity is checked on SVG markup first, pixels second.** Same ABC, same
   abcjs, same font files must give identical markup; the PNG comparison (with
   the SVG snapped to a whole-pixel top so anti-aliasing does not depend on the
