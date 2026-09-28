@@ -25,7 +25,8 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium' }],
   webServer: {
-    command: `npm run preview -- --port ${PORT} --strictPort`,
+    // Bind explicitly: on some runners `localhost` resolves to ::1 while the URL below is IPv4.
+    command: `npm run preview -- --host 127.0.0.1 --port ${PORT} --strictPort`,
     url: `http://127.0.0.1:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
