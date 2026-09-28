@@ -21,7 +21,7 @@ from npm in headless Chromium (cdnjs is blocked from this container, npm is not)
   `L:1/4`, `%%barsperstaff 4`, `P:` boxed parts, `"Chord"` annotations, `|:` `:|`
   repeats and `x4` invisible rests all render. The dialect is sound.
 - **Bug in the reference:** once a part contains a `|:` … `:|` repeat, abcjs re-emits
-  the boxed part letter at the start of *every later staff line* (labels come out
+  the boxed part letter at the start of _every later staff line_ (labels come out
   A, B, B, B, C, B, C, …). That is the row of stray "B" boxes down the left of
   "12 to 12", "Billie Jean" and "Since U Been Gone". I reproduced it in isolation
   and it is **still present in abcjs 6.7.1** (current latest). Charts without repeats
@@ -70,14 +70,14 @@ Nothing here was answered from memory alone.
 
 ### 1.1 What is reusable, what gets archived
 
-| Keep (and where it goes) | Why |
-|---|---|
-| `backend/isolate.py` (Demucs wrapper) | Phase 4 audio module, unchanged |
-| `backend/segment.py` → `_cluster_ids_to_labels` + its tests | Phase 4: turns per-bar cluster ids into A/B/C runs with short-run merging. Exactly the "audio as one more source for structure" job |
-| `backend/quantize_snap.py` + tests | Phase 4: snap detected chord changes to the beat grid |
-| `backend/chords.py` (pitch-class / key parsing, diatonic naming) | Port the idea to TS for the "In numbers" box |
-| `backend/main.py` upload guards (MIME allow-list, 250 MB streaming cap, path-traversal check) | Pattern for the Phase 4 upload endpoint |
-| `frontend/e2e` Playwright setup | Pattern for the new e2e/visual tests |
+| Keep (and where it goes)                                                                      | Why                                                                                                                                 |
+| --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `backend/isolate.py` (Demucs wrapper)                                                         | Phase 4 audio module, unchanged                                                                                                     |
+| `backend/segment.py` → `_cluster_ids_to_labels` + its tests                                   | Phase 4: turns per-bar cluster ids into A/B/C runs with short-run merging. Exactly the "audio as one more source for structure" job |
+| `backend/quantize_snap.py` + tests                                                            | Phase 4: snap detected chord changes to the beat grid                                                                               |
+| `backend/chords.py` (pitch-class / key parsing, diatonic naming)                              | Port the idea to TS for the "In numbers" box                                                                                        |
+| `backend/main.py` upload guards (MIME allow-list, 250 MB streaming cap, path-traversal check) | Pattern for the Phase 4 upload endpoint                                                                                             |
+| `frontend/e2e` Playwright setup                                                               | Pattern for the new e2e/visual tests                                                                                                |
 
 Everything else is archived: `transcribe.py` (Basic Pitch), `octave_check.py` (CREPE),
 `confidence.py`, `analyze.py`, `rhythm_log.py`, the `eval/` harness and corpora,
@@ -91,12 +91,12 @@ so until then the repo contains no Python at all.
 
 ### 1.2 Which model providers offer real OAuth to third-party apps (as of 27 Sep 2026)
 
-| Provider | OAuth for an unaffiliated web app? | What the app does | Browser-direct calls with the user's own key? |
-|---|---|---|---|
-| **Anthropic** | **No.** Subscription OAuth (Pro/Max) was explicitly restricted to Claude Code and claude.ai on 19 Feb 2026; third-party use is a consumer-terms violation and was cut off on 4 Apr 2026. Console has no "sign in with Claude" for third parties. | Paste an API key from the Console. | **Yes, with an opt-in header.** The API accepts browser requests when `anthropic-dangerous-direct-browser-access: true` is sent; the TypeScript SDK sets it via `dangerouslyAllowBrowser: true` (documented, "disabled by default to avoid exposing your secret API credentials"). |
-| **OpenAI** | **No.** "Sign in with ChatGPT" (announced May 2025) still ships only inside OpenAI's own Codex tooling; it is not offered to third-party developers and is identity sign-in, not API access on the user's plan. | Paste an API key. | **Yes.** The API answers browser requests; the SDK requires `dangerouslyAllowBrowser: true` and warns about key exposure. |
-| **OpenRouter** | **Yes, real OAuth (PKCE).** Send the user to `https://openrouter.ai/auth?callback_url=…&code_challenge=…&code_challenge_method=S256`; exchange the code at `POST https://openrouter.ai/api/v1/auth/keys`; you get back a user-scoped API key. No client ID, secret or app registration. | One-click "Connect OpenRouter" button. | Yes; the flow is designed for browser apps (the key comes back to the page). |
-| **Ollama** | n/a. Local server has no auth. Ollama cloud uses API keys (`Authorization: Bearer`, keys made at ollama.com/settings/keys). | Local: enter the URL; the user must add `https://charts.singolab.com` to `OLLAMA_ORIGINS` (default allows only 127.0.0.1 / 0.0.0.0 origins). Cloud: paste a key. | Local: yes once `OLLAMA_ORIGINS` includes the site (that is the documented mechanism). Cloud: bearer key; CORS to confirm at build time. |
+| Provider       | OAuth for an unaffiliated web app?                                                                                                                                                                                                                                                      | What the app does                                                                                                                                                | Browser-direct calls with the user's own key?                                                                                                                                                                                                                                      |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Anthropic**  | **No.** Subscription OAuth (Pro/Max) was explicitly restricted to Claude Code and claude.ai on 19 Feb 2026; third-party use is a consumer-terms violation and was cut off on 4 Apr 2026. Console has no "sign in with Claude" for third parties.                                        | Paste an API key from the Console.                                                                                                                               | **Yes, with an opt-in header.** The API accepts browser requests when `anthropic-dangerous-direct-browser-access: true` is sent; the TypeScript SDK sets it via `dangerouslyAllowBrowser: true` (documented, "disabled by default to avoid exposing your secret API credentials"). |
+| **OpenAI**     | **No.** "Sign in with ChatGPT" (announced May 2025) still ships only inside OpenAI's own Codex tooling; it is not offered to third-party developers and is identity sign-in, not API access on the user's plan.                                                                         | Paste an API key.                                                                                                                                                | **Yes.** The API answers browser requests; the SDK requires `dangerouslyAllowBrowser: true` and warns about key exposure.                                                                                                                                                          |
+| **OpenRouter** | **Yes, real OAuth (PKCE).** Send the user to `https://openrouter.ai/auth?callback_url=…&code_challenge=…&code_challenge_method=S256`; exchange the code at `POST https://openrouter.ai/api/v1/auth/keys`; you get back a user-scoped API key. No client ID, secret or app registration. | One-click "Connect OpenRouter" button.                                                                                                                           | Yes; the flow is designed for browser apps (the key comes back to the page).                                                                                                                                                                                                       |
+| **Ollama**     | n/a. Local server has no auth. Ollama cloud uses API keys (`Authorization: Bearer`, keys made at ollama.com/settings/keys).                                                                                                                                                             | Local: enter the URL; the user must add `https://charts.singolab.com` to `OLLAMA_ORIGINS` (default allows only 127.0.0.1 / 0.0.0.0 origins). Cloud: paste a key. | Local: yes once `OLLAMA_ORIGINS` includes the site (that is the documented mechanism). Cloud: bearer key; CORS to confirm at build time.                                                                                                                                           |
 
 Sources: Anthropic policy change (Anthropic docs update 19 Feb 2026, reported by
 AlternativeTo, Winbuzzer, GIGAZINE; claude-code issues #28091, #82266); Anthropic
@@ -120,23 +120,23 @@ lookup for 30 days; never store or display a source's chord text, only the
 normalised evidence and a link back; a site whose terms forbid automated access is
 dropped, named, and not worked around.
 
-| Source | Gives | Verdict | Why (with how it was checked) |
-|---|---|---|---|
-| Ultimate Guitar | chords (user-submitted) | **drop** | Terms forbid copying, reproducing or exploiting the Service; no developer API (forum requests unanswered for years); tab pages sit behind an anti-bot challenge. (ToS via indexed copy; site blocked.) |
-| Chordify | chords + beat grid, key, bpm | **drop** | Terms: no access "using automated means (such as harvesting bots, robots, spiders, or scrapers) without our express written permission" and no reproduction "in any form"; no public API, only an iframe embed that exposes no data. (Agent-verified from indexed ToS; site blocked.) Written permission from info@chordify.net is the only compliant route. |
-| GuitarTuna / Yousician | chords | check | App-first; no public API found. Read terms before Phase 3; default drop. |
-| Songsterr | tab metadata, tempo; no chords | use via API, low value | Keyless public JSON search API is documented on their site; secondary sources say non-commercial use is permitted (confirm the official wording, page blocked from here). Tempo/time signature only. |
-| E-Chords, Chordie | chords | check | Terms not yet read (sites blocked from here). Default drop until read. |
-| Hooktheory / TheoryTab | numerals + structure per song | **drop** for per-song data | The official API exposes only aggregate chord-probability "trends", not a song's TheoryTab; terms: no third party may "copy, scrape, bulk-download, text-and-data mine, or redistribute … the TheoryTab database". |
-| Yalp | chords + timing | check | Terms not yet read. |
-| GetSongBPM | bpm, key, time signature | **use via official API** | Free key, 3,000 req/hour, JSON; the one condition is a visible backlink to GetSongBPM.com; the database is stated to be CC BY 4.0. (Agent-verified from indexed API page.) |
-| SongBPM | bpm, key | **drop** | Terms: "Automated access to this Service is strictly prohibited. This includes scraping, crawling, bots, scripts, and any form of automated data collection." No API. (Agent-verified.) |
-| Tunebat | bpm, key | **drop** (unless paid API) | Terms forbid "any robots, spider, crawler, scraper or other automated means"; a commercial Music Metadata API exists at tunebat.com/API. Revisit only if it has a free tier. |
-| MusicBrainz | canonical title/artist/year | **use via official API** | Open data; documented etiquette is 1 request/second with a descriptive User-Agent. Metadata only. |
-| Deezer API | bpm, duration, year | check, likely drop | Public JSON endpoints still answer without a token and carry a bpm field, but new developer app registrations are not being issued (community thread, May 2026), and the API terms assume a registered app. |
-| Spotify audio-features / analysis | tempo, key, sections | **drop** | Removed for new apps on 27 Nov 2024; restrictions tightened again Feb 2026; no replacement. |
-| Chordonomicon (Hugging Face) | 666k progressions with section labels, genre, release date, Spotify IDs | check licence, then likely **use offline** | Built from user-generated chord repositories; per the paper the progressions themselves are non-copyrightable. The dataset licence could not be read from here (huggingface.co blocked). If permissive, this is the strongest chord + structure source we have, and it needs **no live scraping at all**. |
-| McGill Billboard, Isophonics | chords | skip | Research corpora with little coverage of a 2025 setlist. |
+| Source                            | Gives                                                                   | Verdict                                    | Why (with how it was checked)                                                                                                                                                                                                                                                                                                                                |
+| --------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Ultimate Guitar                   | chords (user-submitted)                                                 | **drop**                                   | Terms forbid copying, reproducing or exploiting the Service; no developer API (forum requests unanswered for years); tab pages sit behind an anti-bot challenge. (ToS via indexed copy; site blocked.)                                                                                                                                                       |
+| Chordify                          | chords + beat grid, key, bpm                                            | **drop**                                   | Terms: no access "using automated means (such as harvesting bots, robots, spiders, or scrapers) without our express written permission" and no reproduction "in any form"; no public API, only an iframe embed that exposes no data. (Agent-verified from indexed ToS; site blocked.) Written permission from info@chordify.net is the only compliant route. |
+| GuitarTuna / Yousician            | chords                                                                  | check                                      | App-first; no public API found. Read terms before Phase 3; default drop.                                                                                                                                                                                                                                                                                     |
+| Songsterr                         | tab metadata, tempo; no chords                                          | use via API, low value                     | Keyless public JSON search API is documented on their site; secondary sources say non-commercial use is permitted (confirm the official wording, page blocked from here). Tempo/time signature only.                                                                                                                                                         |
+| E-Chords, Chordie                 | chords                                                                  | check                                      | Terms not yet read (sites blocked from here). Default drop until read.                                                                                                                                                                                                                                                                                       |
+| Hooktheory / TheoryTab            | numerals + structure per song                                           | **drop** for per-song data                 | The official API exposes only aggregate chord-probability "trends", not a song's TheoryTab; terms: no third party may "copy, scrape, bulk-download, text-and-data mine, or redistribute … the TheoryTab database".                                                                                                                                           |
+| Yalp                              | chords + timing                                                         | check                                      | Terms not yet read.                                                                                                                                                                                                                                                                                                                                          |
+| GetSongBPM                        | bpm, key, time signature                                                | **use via official API**                   | Free key, 3,000 req/hour, JSON; the one condition is a visible backlink to GetSongBPM.com; the database is stated to be CC BY 4.0. (Agent-verified from indexed API page.)                                                                                                                                                                                   |
+| SongBPM                           | bpm, key                                                                | **drop**                                   | Terms: "Automated access to this Service is strictly prohibited. This includes scraping, crawling, bots, scripts, and any form of automated data collection." No API. (Agent-verified.)                                                                                                                                                                      |
+| Tunebat                           | bpm, key                                                                | **drop** (unless paid API)                 | Terms forbid "any robots, spider, crawler, scraper or other automated means"; a commercial Music Metadata API exists at tunebat.com/API. Revisit only if it has a free tier.                                                                                                                                                                                 |
+| MusicBrainz                       | canonical title/artist/year                                             | **use via official API**                   | Open data; documented etiquette is 1 request/second with a descriptive User-Agent. Metadata only.                                                                                                                                                                                                                                                            |
+| Deezer API                        | bpm, duration, year                                                     | check, likely drop                         | Public JSON endpoints still answer without a token and carry a bpm field, but new developer app registrations are not being issued (community thread, May 2026), and the API terms assume a registered app.                                                                                                                                                  |
+| Spotify audio-features / analysis | tempo, key, sections                                                    | **drop**                                   | Removed for new apps on 27 Nov 2024; restrictions tightened again Feb 2026; no replacement.                                                                                                                                                                                                                                                                  |
+| Chordonomicon (Hugging Face)      | 666k progressions with section labels, genre, release date, Spotify IDs | check licence, then likely **use offline** | Built from user-generated chord repositories; per the paper the progressions themselves are non-copyrightable. The dataset licence could not be read from here (huggingface.co blocked). If permissive, this is the strongest chord + structure source we have, and it needs **no live scraping at all**.                                                    |
+| McGill Billboard, Isophonics      | chords                                                                  | skip                                       | Research corpora with little coverage of a 2025 setlist.                                                                                                                                                                                                                                                                                                     |
 
 **The honest consequence.** The two sites the reference leaned on for chords and
 bar counts (Chordify for the beat grid, Ultimate Guitar for chords) are both out on
@@ -200,7 +200,7 @@ the ABC and pixel-matched on the CSS; the AI's only job is turning cross-checked
 evidence into that page's JSON.
 
 Name proposal: **Low Book** (a Real Book for the low end; your site already says
-"Low end, on the weekends"). Alternatives: *Bottom Line*, *Slash Book*. Used below as
+"Low end, on the weekends"). Alternatives: _Bottom Line_, _Slash Book_. Used below as
 the package name `lowbook`; trivial to rename.
 
 ---
@@ -271,10 +271,16 @@ Each approved source is a `SourceAdapter` returning normalised evidence; pasted
 evidence (§1.3) uses the same shape:
 
 ```ts
-type Evidence = { source: string; url?: string; kind: 'api' | 'dataset' | 'pasted' | 'audio';
-  gives: ('chords'|'beat-grid'|'key'|'bpm'|'structure')[];
-  key?: string; bpm?: number; timeSig?: string;
-  sections?: { label: string; bars?: number; chords?: string[] }[] };
+type Evidence = {
+  source: string;
+  url?: string;
+  kind: 'api' | 'dataset' | 'pasted' | 'audio';
+  gives: ('chords' | 'beat-grid' | 'key' | 'bpm' | 'structure')[];
+  key?: string;
+  bpm?: number;
+  timeSig?: string;
+  sections?: { label: string; bars?: number; chords?: string[] }[];
+};
 ```
 
 `crossCheck(evidence[])` in `chart-core` is pure and unit-tested: key by majority
