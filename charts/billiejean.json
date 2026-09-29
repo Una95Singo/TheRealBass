@@ -1,0 +1,540 @@
+{
+  "schemaVersion": 1,
+  "id": "billiejean",
+  "title": "Billie Jean",
+  "artist": "Michael Jackson",
+  "year": 1982,
+  "key": {
+    "display": "F# minor",
+    "abc": "F#m",
+    "relative": "F# Dorian in the vamp"
+  },
+  "bpm": 117,
+  "time": "4/4",
+  "feel": "Mid-tempo groove — the bass line IS the song",
+  "form": [
+    {
+      "label": "Intro",
+      "bars": 12,
+      "section": "A",
+      "confidence": "l"
+    },
+    {
+      "label": "V1",
+      "bars": 16,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "PC",
+      "bars": 8,
+      "section": "C",
+      "confidence": "h"
+    },
+    {
+      "label": "Ch",
+      "bars": 12,
+      "section": "D",
+      "confidence": "l"
+    },
+    {
+      "label": "Int",
+      "bars": 4,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "V2",
+      "bars": 16,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "PC",
+      "bars": 8,
+      "section": "C",
+      "confidence": "h"
+    },
+    {
+      "label": "Ch",
+      "bars": 12,
+      "section": "D",
+      "confidence": "l"
+    },
+    {
+      "label": "Solo",
+      "bars": 8,
+      "section": "B",
+      "confidence": "l"
+    },
+    {
+      "label": "Ch",
+      "times": 2,
+      "section": "D",
+      "confidence": "l"
+    },
+    {
+      "label": "Vamp out",
+      "section": "A",
+      "confidence": "l"
+    }
+  ],
+  "sections": [
+    {
+      "letter": "A",
+      "name": "Intro",
+      "repeat": false,
+      "bars": [
+        {
+          "silent": true,
+          "chords": [
+            {
+              "chord": "N.C. drums",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "silent": true,
+          "chords": []
+        },
+        {
+          "silent": true,
+          "chords": []
+        },
+        {
+          "silent": true,
+          "chords": []
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "B",
+      "name": "V1",
+      "repeat": true,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "C",
+      "name": "PC",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "D",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "D",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "D",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "D",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C#7",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "D",
+      "name": "Ch",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "A/E",
+              "beat": 1
+            },
+            {
+              "chord": "G#m/F#",
+              "beat": 2
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm7",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F#m",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "**The riff is the whole gig:** a two-bar ostinato in 8ths under the F#m/G#m alternation; same shape from B under Bm7. Play it like a metronome — no fills until the pre-chorus.",
+    "**Pre-chorus opens up:** D and F#m one bar each, held roots; C#7 sets up the chorus.",
+    "**Bar counts are the weak spot here:** the vamp is one 2-bar cell repeated, so count phrases against the vocal, not the chords."
+  ],
+  "numbers": "F#m = i   G#m/F# = ii/♭7 (pedal)   A/E = III/♭3\nBm7 = iv7   D = VI   C#7 = V7",
+  "verify": {
+    "agree": [
+      "e-chords",
+      "Guitaretab",
+      "Hooktheory"
+    ],
+    "check": [
+      "the Notion entry says \"(Soul)\" — if the band plays a rearranged version, this chart follows the original record"
+    ],
+    "text": "Chords: e-chords and Guitaretab agree on the F#m–G#m/F#–A/E–G#m/F# vamp, Bm7 and D–F#m pre-chorus; Hooktheory confirms F# minor, 117 BPM. **Check:** the Notion entry says \"(Soul)\" — if the band plays a rearranged version, this chart follows the original record."
+  },
+  "sources": [
+    {
+      "name": "e-chords",
+      "gives": []
+    },
+    {
+      "name": "Guitaretab",
+      "gives": []
+    },
+    {
+      "name": "Hooktheory",
+      "gives": []
+    }
+  ]
+}

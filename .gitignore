@@ -1,20 +1,10 @@
-__pycache__/
-*.pyc
-.venv/
-.venv-test/
-venv/
-env/
 node_modules/
 dist/
-.DS_Store
-*.log
+.wrangler/
+coverage/
 test-results/
 playwright-report/
-
-# Scratch modules from experiments / bake-offs — not shipped.
-backend/scratch/
-
-# Real-bass eval corpus audio — recordings stay local; only the
-# manifest + ground-truth MIDI are committed.
-backend/eval/corpus/real/audio/
-
+*.log
+.DS_Store
+.env
+.env.*

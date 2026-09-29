@@ -1,0 +1,12 @@
+X:6
+M:4/4
+L:1/4
+Q:1/4=97
+K:D clef=bass style=rhythm
+%%barsperstaff 4
+P:A
+"Dmaj7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, | "Bm7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, |
+"Dmaj7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, | "Bm7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, |
+P:B
+"Dmaj7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, | "Dmaj7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, |
+"Dmaj7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, | "Dmaj7"D,, D,, D,, D,, | "Em7"D,, D,, D,, D,, |]

@@ -1,181 +1,73 @@
-# TheRealBass
+# Low Book
 
-A fully local bass transcription web app. Upload an audio file; the app isolates
-the bass stem, transcribes it to MIDI, and renders a Real Book-style bass-clef
-lead sheet with key, BPM, and time signature.
+One-page, Real Book-style gig charts for bass. Chords over slashes on a bass-clef
+staff, boxed rehearsal letters, a form roadmap with bar counts and ●◐○ confidence
+marks, key / tempo / feel, a "bass notes" box and a Nashville key. No lyrics, no
+melody, no note-for-note line.
 
-Everything runs on `localhost` — no external APIs.
+`PLAN.md` is the plan and the reasoning; `DECISIONS.md` the calls made along the
+way. The earlier note-for-note transcription experiment (TheRealBass) is
+preserved as commit `37d361f` on `claude/general-session-SsMKd` (tagged
+`v0-transcriber` locally).
 
-## Quick start (macOS / Linux)
-
-From a fresh clone:
-
-```bash
-./scripts/start.sh
-```
-
-This (idempotently) creates the backend venv, installs Python + npm
-dependencies, launches both servers, and opens the app in your browser.
-Ctrl+C stops both. Requires `python3.11` and `npm` on your `PATH`.
-
-For Windows or to run the two servers in separate terminals, see
-**First-run setup** below.
-
-## Stack
-
-- **Backend:** FastAPI, Demucs (bass isolation), Spotify Basic Pitch (MIDI
-  transcription), music21 (quantization + key/tempo analysis)
-- **Frontend:** React (Vite) + VexFlow (notation rendering)
-
-## Folder structure
+## Layout
 
 ```
-TheRealBass/
-├── backend/
-│   ├── main.py
-│   ├── isolate.py
-│   ├── transcribe.py
-│   ├── analyze.py
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── components/
-│   │   │   ├── UploadZone.jsx
-│   │   │   ├── ProcessingView.jsx
-│   │   │   ├── TranscriptionView.jsx
-│   │   │   └── NotationRenderer.jsx
-│   │   └── api.js
-│   └── package.json
-├── scripts/
-│   ├── setup.sh       # idempotent: venv + pip + npm install
-│   └── start.sh       # runs both servers, opens browser
-└── README.md
+apps/charts/          Vite + React + TypeScript app → charts.singolab.com
+packages/chart-core/  Chart JSON schema (zod), chartToAbc(), ABC dialect lint. Pure, unit-tested.
+workers/site/         Cloudflare Worker: serves apps/charts/dist as static assets, answers /api/*
+charts/               Seed charts, one Chart JSON per song
+reference/            The frozen reference page, its ABC goldens and render baselines
+prompts/              (Phase 3) versioned prompt files
+audio/                (Phase 4) empty until asked for
 ```
 
-## First-run setup
+## Commands
 
-### 1. Backend (Python venv)
-
-The backend must be run inside a Python virtual environment. **Use Python
-3.10 or 3.11** — the pinned `torch==2.2.2` does not publish wheels for
-Python 3.12+ and `basic-pitch` pulls in TensorFlow with similarly tight
-bounds. If `pip install` says *"Could not find a version that satisfies
-the requirement torch==2.2.2"*, your Python is too new; install 3.11 and
-create the venv with it explicitly (`python3.11 -m venv .venv`).
-
-```bash
-cd backend
-python3.11 -m venv .venv             # Windows: py -3.11 -m venv .venv
-source .venv/bin/activate            # Windows: .venv\Scripts\activate
-pip install --upgrade pip
-pip install -r requirements.txt
 ```
-
-All dependency versions in `requirements.txt` are pinned exactly.
-
-> **Note:** On the first transcription, Demucs downloads the `htdemucs` model
-> weights (~1GB) from `dl.fbaipublicfiles.com` into your Torch cache
-> (`~/.cache/torch/hub/`). Subsequent runs use the cached weights. Basic Pitch
-> bundles its own (much smaller) model inside the wheel — no download needed.
-> If you are behind a firewall that blocks that host, the Demucs step will
-> fail with HTTP 403; whitelist `dl.fbaipublicfiles.com` or pre-seed the
-> Torch cache.
-
-Start the API:
-
-```bash
-# from backend/ with the venv active
-python main.py
-# → http://127.0.0.1:8000
-```
-
-### 2. Frontend (Vite)
-
-```bash
-cd frontend
 npm install
-npm run dev
-# → http://127.0.0.1:5173
+npm run dev              # app at http://localhost:5173
+npm test                 # unit tests (chart-core: goldens, dialect rules, schema)
+npm run typecheck
+npm run lint
+npm run format:check
+npm run build            # apps/charts/dist
+npm run test:visual      # Playwright: staff parity vs the reference, part boxes, page counts
+npm run baseline -w @lowbook/charts   # regenerate reference/baseline from the reference page
+npm run check -w @lowbook/site        # wrangler deploy --dry-run
 ```
 
-Open the Vite URL in your browser. The frontend only calls `http://127.0.0.1:8000`.
+Node 22. Playwright needs its Chromium once: `npx playwright install chromium`
+from `apps/charts`.
 
-## API
+## How a chart becomes a page
 
-### `POST /transcribe`
+1. `charts/<id>.json` is validated by `ChartSchema` (`packages/chart-core`).
+2. `chartToAbc(chart)` turns it into ABC in the dialect described in
+   `reference/README.md`. For the seven seed songs the output equals the
+   reference page's own ABC, and a golden test keeps it that way.
+3. abcjs 6.4.4 renders the ABC to SVG in the browser with the options in
+   `apps/charts/src/lib/render.ts`. Duplicate part boxes (an abcjs quirk) are
+   removed after rendering.
+4. The sheet is laid out with the reference CSS at print geometry (Letter,
+   0.45in / 0.5in / 0.4in margins). If it is taller than one page it steps
+   down: 8 bars per line, then a two-page split at a section boundary, first
+   at 4 bars per line and then at 8. It never shrinks the staff.
+5. Print with the browser's print dialog; each sheet is one page.
 
-Multipart form upload with a single `file` field.
+## Deploying (Cloudflare)
 
-- **Max file size:** 250MB
-- **Accepted MIME types:** `audio/mpeg`, `audio/wav`, `audio/x-wav`,
-  `audio/mp4`, `audio/x-m4a` (mp3 / wav / m4a)
-- **Invalid type:** returns `400`
-- **Oversize:** returns `413`
+One Worker with static assets, in the same Cloudflare account as
+`singolab.com` and `drive.singolab.com`. Once, in the dashboard:
 
-Response shape:
+- Workers & Pages → Create → Worker → connect this GitHub repository.
+- Root directory `/`; build command `npm ci && npm run build`; deploy command
+  `npx wrangler deploy --config workers/site/wrangler.jsonc`.
+- Settings → Domains & Routes → add custom domain `charts.singolab.com`
+  (the zone is on Cloudflare, so the DNS record is created for you).
 
-```json
-{
-  "key": "G major",
-  "bpm": 120,
-  "time_signature": "4/4",
-  "measures": [
-    {
-      "measure_number": 1,
-      "notes": [
-        { "pitch": "G2", "duration": "q", "start_beat": 1 },
-        { "pitch": "D2", "duration": "q", "start_beat": 2 }
-      ]
-    }
-  ],
-  "bass_stem_path": "/tmp/therealbass/stems"
-}
-```
+Fallback that needs no Worker: a Pages project exactly like `drive.singolab.com`
+with build command `npm ci && npm run build` and output directory
+`apps/charts/dist`.
 
-Duration codes follow VexFlow: `w`, `h`, `q`, `8`, `16`, `32`, with `d` suffix
-for dotted values (e.g. `qd`).
-
-## Testing
-
-Backend (no ML stack required — uses a separate `.venv-test`):
-
-```bash
-cd backend
-python3 -m venv .venv-test
-source .venv-test/bin/activate
-pip install -r dev-requirements.txt
-PYTHONPATH=. pytest tests/ -v
-```
-
-A second smoke test validates the real music21 analyze path against a hand-crafted
-MIDI fixture (requires the full `.venv`):
-
-```bash
-cd backend
-source .venv/bin/activate
-python scripts/smoke_analyze.py
-```
-
-Frontend end-to-end tests (stub the backend via Playwright route interception):
-
-```bash
-cd frontend
-npm install
-npx playwright test
-```
-
-## Security & dependencies
-
-- Backend runs in a Python virtual environment.
-- All dependency versions are pinned exactly — no `>=` or `~` ranges.
-- Uploaded filenames are discarded; files are stored under a server-generated
-  UUID plus the MIME-derived extension.
-- A 250MB upload limit is enforced server-side (streaming check; rejects
-  oversized uploads mid-stream with `413`).
-- File type is validated server-side by MIME type. Only mp3, wav, and m4a are
-  accepted; everything else returns `400`.
-- All uploaded audio, isolated stems, and MIDI files are written under
-  `/tmp/therealbass/` only. A path-traversal guard prevents writes outside it.
-- The frontend only calls `http://127.0.0.1:8000` — no external network calls.
-- CORS is restricted to the Vite dev server origin.
+No secrets are needed for Phases 1 and 2; nothing is stored server-side.

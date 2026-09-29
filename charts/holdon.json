@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 1,
+  "id": "holdon",
+  "title": "Hold On",
+  "artist": "Alabama Shakes",
+  "year": 2012,
+  "key": {
+    "display": "C major",
+    "abc": "C",
+    "relative": "blues-inflected"
+  },
+  "bpm": 88,
+  "time": "4/4",
+  "feel": "Southern soul, laid back, behind the beat",
+  "form": [
+    {
+      "label": "Intro",
+      "bars": 8,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "V1",
+      "bars": 8,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "C",
+      "confidence": "h"
+    },
+    {
+      "label": "V2",
+      "bars": 8,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "C",
+      "confidence": "h"
+    },
+    {
+      "label": "Br",
+      "bars": 8,
+      "section": "D",
+      "confidence": "m"
+    },
+    {
+      "label": "V3",
+      "bars": 8,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "C",
+      "confidence": "h"
+    },
+    {
+      "label": "Br",
+      "bars": 8,
+      "section": "D",
+      "confidence": "m"
+    },
+    {
+      "label": "Out",
+      "bars": 8,
+      "section": "E",
+      "confidence": "l"
+    }
+  ],
+  "sections": [
+    {
+      "letter": "A",
+      "name": "Intro",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        }
+      ]
+    },
+    {
+      "letter": "B",
+      "name": "V1",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        }
+      ]
+    },
+    {
+      "letter": "C",
+      "name": "Ch",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "D",
+      "name": "Br",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "E",
+      "name": "Out",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            },
+            {
+              "chord": "F",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "**Two chords, one groove.** Verses sit on C with the signature pickup riff into each bar; F answers on the \"hold on\" hits in the chorus.",
+    "**Space is the part:** at 88 leave air after beat 1. The bridge (\"you got to wait\") is the same C–F cell, dynamics down.",
+    "**Chorus F placement** is half-bar here per Guitartuna; Chordify hears F only every 4th bar — listen for which."
+  ],
+  "numbers": "C = I   F = IV   (that's it)",
+  "verify": {
+    "agree": [
+      "Chordify",
+      "Guitartuna",
+      "ChordU"
+    ],
+    "check": [
+      "intro length and where the F lands in the chorus"
+    ],
+    "text": "Chords: Chordify, Guitartuna and ChordU all say C and F only, C major, 88–91 BPM. Section order from Guitartuna; bar counts assume 8-bar sections. **Check:** intro length and where the F lands in the chorus."
+  },
+  "sources": [
+    {
+      "name": "Chordify",
+      "gives": []
+    },
+    {
+      "name": "Guitartuna",
+      "gives": []
+    },
+    {
+      "name": "ChordU",
+      "gives": []
+    }
+  ]
+}

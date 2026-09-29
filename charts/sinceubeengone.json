@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "id": "sinceubeengone",
+  "title": "Since U Been Gone",
+  "artist": "Kelly Clarkson",
+  "year": 2004,
+  "key": {
+    "display": "G major",
+    "abc": "G",
+    "relative": "Mixolydian verse (F♮)"
+  },
+  "bpm": 131,
+  "time": "4/4",
+  "feel": "Pop-punk, driving 8ths, big chorus",
+  "form": [
+    {
+      "label": "Intro",
+      "bars": 4,
+      "section": "A",
+      "confidence": "m"
+    },
+    {
+      "label": "V1",
+      "bars": 16,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "PC",
+      "bars": 8,
+      "section": "C",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "D",
+      "confidence": "h"
+    },
+    {
+      "label": "V2",
+      "bars": 8,
+      "section": "B",
+      "confidence": "m"
+    },
+    {
+      "label": "PC",
+      "bars": 8,
+      "section": "C",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "bars": 8,
+      "section": "D",
+      "confidence": "h"
+    },
+    {
+      "label": "Br",
+      "bars": 8,
+      "section": "E",
+      "confidence": "m"
+    },
+    {
+      "label": "Inst",
+      "bars": 8,
+      "section": "F",
+      "confidence": "m"
+    },
+    {
+      "label": "Ch",
+      "times": 2,
+      "section": "D",
+      "confidence": "h"
+    },
+    {
+      "label": "Tag",
+      "bars": 4,
+      "section": "A",
+      "confidence": "l"
+    }
+  ],
+  "sections": [
+    {
+      "letter": "A",
+      "name": "Intro",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        },
+        {
+          "chords": []
+        }
+      ]
+    },
+    {
+      "letter": "B",
+      "name": "V1",
+      "repeat": true,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Am",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Am",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "C",
+      "name": "PC",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Am",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "F",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        }
+      ]
+    },
+    {
+      "letter": "D",
+      "name": "Ch",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Bm",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Am",
+              "beat": 1
+            },
+            {
+              "chord": "Em",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "D",
+              "beat": 1
+            },
+            {
+              "chord": "Am",
+              "beat": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "letter": "E",
+      "name": "Br",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "C",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": []
+        }
+      ]
+    },
+    {
+      "letter": "F",
+      "name": "Inst",
+      "repeat": false,
+      "bars": [
+        {
+          "chords": [
+            {
+              "chord": "Bm",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Bm",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "Em",
+              "beat": 1
+            },
+            {
+              "chord": "C",
+              "beat": 3
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "chord": "G",
+              "beat": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "**Verse F♮** is the Mixolydian colour — play F, not F#. Root 8ths, slightly muted.",
+    "**Chorus** is where the bass drives: Bm–C–G with the C landing on beat 3. Open it right up.",
+    "**Bridge:** C–Em–C–G, half-time feel in the drums; keep 8ths steady underneath, build into the instrumental."
+  ],
+  "numbers": "G = I   Am = ii   Em = vi   F = ♭VII (verse)\nBm = iii   C = IV   D = V",
+  "verify": {
+    "agree": [
+      "Songsterr",
+      "Chords Easy",
+      "Khmerchords",
+      "Hooktheory",
+      "Klangio"
+    ],
+    "check": [
+      "pre-chorus length and the chorus turnaround (D–Am)"
+    ],
+    "text": "Chords: Songsterr, Chords Easy and Khmerchords agree on verse G–Am–Em–F, chorus Bm–C–G / Em–C–G / Am–Em–D–Am, bridge C–Em–C–G; Hooktheory and Klangio give G major, 130–131 BPM. Bar counts inferred from lyric phrasing. **Check:** pre-chorus length and the chorus turnaround (D–Am)."
+  },
+  "sources": [
+    {
+      "name": "Songsterr",
+      "gives": []
+    },
+    {
+      "name": "Chords Easy",
+      "gives": []
+    },
+    {
+      "name": "Khmerchords",
+      "gives": []
+    },
+    {
+      "name": "Hooktheory",
+      "gives": []
+    },
+    {
+      "name": "Klangio",
+      "gives": []
+    }
+  ]
+}

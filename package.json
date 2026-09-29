@@ -1,0 +1,35 @@
+{
+  "name": "lowbook",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One-page Real Book-style gig charts for bass.",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "workers/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @lowbook/charts",
+    "build": "npm run build -w @lowbook/charts",
+    "test": "npm run test --workspaces --if-present",
+    "test:visual": "npm run test:visual -w @lowbook/charts",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "eslint": "^10.0.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "eslint-plugin-react-refresh": "^0.5.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.0"
+  }
+}
